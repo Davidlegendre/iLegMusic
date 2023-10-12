@@ -12,10 +12,8 @@ namespace iLegMusic.Models
         public string InitialsName {
             get {
                 var splits = ArtistKey.Split(' ');
-                return splits.Length > 1 ? splits[0].ToUpper() + splits[1].ToUpper() : splits[0].ToUpper();
+                return splits.Length > 1 ? splits[0][0].ToString().ToUpper() + splits[1][0].ToString().ToUpper() : splits[0][0].ToString().ToUpper();
             }
         }
-        public IEnumerable<AlbumModel> Albums { get; set; }
-
     }
 }

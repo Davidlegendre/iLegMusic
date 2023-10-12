@@ -33,14 +33,23 @@ namespace iLegMusic.Views.Windows
         {
             if(_vm!= null) {
                 _vm.Symbolplay = Wpf.Ui.Common.SymbolRegular.Play20;
+                _vm.IsFinishPlay = true;
             }
         }
 
         private void media_MediaOpened(object sender, RoutedEventArgs e)
         {
-            if (_vm != null)
+            if (_vm != null && _vm.Musics != null)
             {
-                _vm.Symbolplay = Wpf.Ui.Common.SymbolRegular.Pause20;
+                _vm.IsFinishPlay = false;
+                _vm.Symbolplay = Wpf.Ui.Common.SymbolRegular.Pause20;               
+                _vm.Musics.Where(x=> x.IsInPlay == true).ToList().ForEach(x => x.IsInPlay = false);
+                _vm.Musics.First(x => x == _vm.MusicSelected).IsInPlay = true;
+                if (media.NaturalDuration.HasTimeSpan)
+                {
+                    _vm.MaxValueMusicTime = media.NaturalDuration.TimeSpan.TotalSeconds;
+                    _vm.InitTask();
+                }
             }
         }
     }

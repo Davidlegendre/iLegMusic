@@ -8,12 +8,22 @@ namespace iLegMusic.Services
     public class LegMusicServiceGlobal
     {
         //obtencion de musicas
+        public int ColumnsFromWidthWindow(int ActuaWidthWindow)
+        {
+            return ActuaWidthWindow / 270;
+        }
         public void GetFilesWithSource(Action init, Action done, string source = "C:\\Users") {
             new Task(() => {
                 init();
                 GetFiles(source);
                 done();
             }).Start();
+        }
+
+        public string GetKeyForGroup(MusicModel x) {
+            var firstcaracter = x.Title.ToUpper().Trim()[0];
+            return char.IsNumber(firstcaracter) ? "#" : firstcaracter.ToString();
+               
         }
 
         void GetFiles(string source = "C:/")

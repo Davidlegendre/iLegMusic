@@ -17,28 +17,34 @@
     WindowBackdropType="Mica"
     Background="{ui:ThemeResource}"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+    mc:Ignorable="d" MinWidth="400">
     <ui:FluentWindow.DataContext>
         <viewmodels:MainWindowViewModel></viewmodels:MainWindowViewModel>
     </ui:FluentWindow.DataContext>
     <Grid>
-        <MediaElement LoadedBehavior="Manual" UnloadedBehavior="Manual" Name="media" MediaEnded="media_MediaEnded" MediaOpened="media_MediaOpened" Source="{Binding MusicSelected.url}" ></MediaElement>
-        <ui:Card Visibility="{Binding VisibleHub}" HorizontalAlignment="Center">
+       
+        <MediaElement LoadedBehavior="Manual" UnloadedBehavior="Manual" Volume="{Binding Volumen}" Name="media" MediaEnded="media_MediaEnded" MediaOpened="media_MediaOpened" Source="{Binding MusicSelected.url}" ></MediaElement>
+        <ui:Button Visibility="Collapsed" Name="btnsearch" Appearance="Primary"></ui:Button>
+        <ui:Card Visibility="{Binding VisibleHub}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center">
             <StackPanel Width="220">
-                <TextBlock TextAlignment="Justify" TextWrapping="Wrap" Text="Hola Bienvenido a iLegMusic, para comenzar da clic en el boton, buscara todo desde la ruta: "></TextBlock>
+                <ui:SymbolIcon Foreground="{Binding Background,ElementName=btnsearch}" Symbol="MusicNote124" Filled="True" FontSize="48" Margin="0,0,0,20"></ui:SymbolIcon>
+                <TextBlock x:Name="txte" TextAlignment="Justify" TextWrapping="Wrap" Text="Hola Bienvenido a iLegMusic, para comenzar da clic en el boton, buscara todo desde la ruta: "></TextBlock>
                 <TextBlock Text="{Binding User}" ToolTip="{Binding User}" TextTrimming="CharacterEllipsis" FontSize="12" Margin="0,5,0,0" Opacity="0.7"></TextBlock>
-                <ui:Button Command="{Binding SearchMusicsCommand}" IsEnabled="{Binding EnabledFinish}" Height="70" Width="70" Margin="20" HorizontalAlignment="Center">
-                    <ui:SymbolIcon FontSize="28" Symbol="BookSearch24"></ui:SymbolIcon>
+                <ui:Button  Command="{Binding SearchMusicsCommand}" Padding="20" IsEnabled="{Binding EnabledFinish}" HorizontalAlignment="Stretch" Margin="0,20,0,0">
+                    <StackPanel>
+                        <ui:SymbolIcon Foreground="{Binding Foreground,ElementName=txte}" FontSize="28" Symbol="Search20" ></ui:SymbolIcon>
+                        <Grid HorizontalAlignment="Center" Margin="7,20,7,17" Visibility="{Binding VisibleIFFind}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Foreground="{Binding Foreground,ElementName=txte}" Text="Musicas Encontradas: "></TextBlock>
+                            <TextBlock Foreground="{Binding Foreground,ElementName=txte}" Grid.Column="1" Text="{Binding MusicsCount}"></TextBlock>
+                        </Grid>
+                        <ProgressBar  IsIndeterminate="True" Visibility="{Binding VisibleIFFind}" Height="4"></ProgressBar>
+
+                    </StackPanel>
                 </ui:Button>
-                <Grid HorizontalAlignment="Center" Margin="7,0,7,17" Visibility="{Binding VisibleIFFind}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Musicas Encontradas: "></TextBlock>
-                    <TextBlock Grid.Column="1" Text="{Binding MusicsCount}"></TextBlock>
-                </Grid>
-                <ui:ProgressRing Width="18" IsIndeterminate="True" Visibility="{Binding VisibleIFFind}" Height="18"></ui:ProgressRing>
             </StackPanel>
         </ui:Card>
 
@@ -49,6 +55,6 @@
             x:Name="TitleBar"
             CloseWindowByDoubleClickOnIcon="True" Margin="70,0,0,0">
         </ui:TitleBar>
-       
+        <Rectangle Visibility="{Binding VisibleProtectorWindow}" Fill="{ui:ThemeResource}" Opacity="0.7"></Rectangle>
     </Grid>
 </ui:FluentWindow>

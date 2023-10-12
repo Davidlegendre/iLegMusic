@@ -13,6 +13,6 @@ namespace iLegMusic.Models
         public string AlbumKey { get; set; }
         public IEnumerable<string> Artist { get; set; }
         public ImageBrush? Img { get; set; }
-        public IEnumerable<MusicModel> Musics { get; set; }
+        public string ArtistsStrings => string.Join(", ", Artist);
     }
 }
