@@ -7,11 +7,30 @@ namespace iLegMusic.Models
     public class MusicModel : INotifyPropertyChanged
     {
         bool _isinplay = false;
+        Visibility _isvisible = Visibility.Visible;
         public string Title { get; set; }
         public string Artist { get; set; }
         public string Album { get; set; }
+        public string Duration { get; set; }
         public ImageBrush? Img { get; set; }
         public string url { get; set; }
+
+        public Visibility IsVisible
+        {
+            get => _isvisible;
+            set
+            {
+                if (_isvisible != value)
+                {
+                    _isvisible = value;
+                    change(nameof(IsVisible));
+                }
+            }
+        }
+
+
+
+
         public bool IsInPlay
         {
             get => _isinplay; set

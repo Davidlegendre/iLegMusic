@@ -9,6 +9,7 @@ using iLegMusic.Services;
 using iLegMusic.Views.Windows;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -27,13 +28,14 @@ namespace iLegMusic.ViewModels.Windows
         }
 
         Task? timeTask;
+        bool _disposed = false;
 
         public void InitTask() {
             if (timeTask == null)
             {
                 timeTask = new Task(() =>
                 {
-                    while (true)
+                    while (!_disposed)
                     {
 
                         if (Symbolplay != SymbolRegular.Play20 && Mediaelement != null)
@@ -66,6 +68,15 @@ namespace iLegMusic.ViewModels.Windows
         Visibility _visibleMain = Visibility.Collapsed;
 
         [ObservableProperty]
+        Visibility _AlbumVisible = Visibility.Collapsed;
+
+        [ObservableProperty]
+        Visibility _ArtistVisible = Visibility.Collapsed;
+
+        [ObservableProperty]
+        Visibility _MusicsVisible = Visibility.Visible;
+
+        [ObservableProperty]
         Visibility _visibleHub = Visibility.Visible;
 
         [ObservableProperty]
@@ -79,6 +90,15 @@ namespace iLegMusic.ViewModels.Windows
 
         [ObservableProperty]
         MusicModel? _MusicSelected = null;
+
+        [ObservableProperty]
+        CardAction? _CardActionSelected;
+
+        [ObservableProperty]
+        AlbumModel? _AlbumSelected = null;
+
+        [ObservableProperty]
+        Visibility _DetalleAlbumVisible = Visibility.Collapsed;
 
         [ObservableProperty]
         Visibility _visibleProtectorWindow = Visibility.Collapsed;
@@ -98,14 +118,7 @@ namespace iLegMusic.ViewModels.Windows
         [ObservableProperty]
         MenuOrderModel? _MenuOrderSelected = null;
 
-        [ObservableProperty]
-        Visibility _visibleAlbums = Visibility.Collapsed;
 
-        [ObservableProperty]
-        Visibility _visibleArtists = Visibility.Collapsed;
-
-        [ObservableProperty]
-        Visibility _visibleMusics = Visibility.Visible;
 
         [ObservableProperty]
         ObservableCollection<MenuOrderModel> _menuOrder = new ObservableCollection<MenuOrderModel>() {
@@ -119,6 +132,8 @@ namespace iLegMusic.ViewModels.Windows
 
         [ObservableProperty]
         Visibility _VisibleIFFind = Visibility.Collapsed;
+
+      
 
         [ObservableProperty]
         double _maxValueMusicTime = 0;
@@ -162,6 +177,11 @@ namespace iLegMusic.ViewModels.Windows
         [RelayCommand]
         private void SearchMusics()
         {
+            if (!System.IO.Directory.Exists(User))
+            {
+                System.Windows.MessageBox.Show("La ruta no es correcta o no existe");
+                return;
+            }
             _service?.GetFilesWithSource(() =>
             {
                 VisibleIFFind = Visibility.Visible;
@@ -172,6 +192,7 @@ namespace iLegMusic.ViewModels.Windows
                 EnabledFinish = true;
                 VisibleHub = Visibility.Collapsed;
                 VisibleMain = Visibility.Visible;
+                MusicsVisible = Visibility.Visible;
                 App.Current.Dispatcher.Invoke(() => {
                     Musics?.GroupBy(x => x.Album).ToList().ForEach(x => {
                         Albums.Add(new AlbumModel()
@@ -196,7 +217,52 @@ namespace iLegMusic.ViewModels.Windows
                         });
                     });
                 });
-            });
+            }, User);
+        }
+
+        [RelayCommand]
+        void changeSource() {
+            if (System.Windows.MessageBox.Show("Desea Buscar en Otra Ruta? esto tardara un poco y cerraremos todo", 
+                "Precaucion", System.Windows.MessageBoxButton.YesNo) == System.Windows.MessageBoxResult.No)
+                return;
+            VisibleIFFind = Visibility.Collapsed;
+            EnabledFinish = true;
+            VisibleHub = Visibility.Visible;
+            VisibleMain = Visibility.Collapsed;
+            AlbumVisible = Visibility.Collapsed;
+            ArtistVisible = Visibility.Collapsed;
+            MusicsVisible = Visibility.Collapsed;
+            Mediaelement?.Stop();
+            Symbolplay = SymbolRegular.Play20;
+            MusicSelected = null;
+            Musics.Clear();
+            GrupoMusic.Clear();
+            Albums.Clear();
+            Artists.Clear();
+            _disposed = true;
+            timeTask = null;
+            _disposed = false;
+            MusicsCount = 0;
+            IsFinishPlay = false;
+        }
+
+        [RelayCommand]
+        void DetalleAlbum(AlbumModel album) {
+            if (Musics == null) return;
+            AlbumSelected = album;
+            Musics.ToList().ForEach(m => m.IsVisible = m.Album == album.AlbumKey ? Visibility.Visible : Visibility.Collapsed);
+            GrupoMusic.ToList().ForEach(x => x.IsVisible = x.Musics.Count(x => x.IsVisible == Visibility.Collapsed) == x.Musics.Count() ? Visibility.Collapsed : Visibility.Visible);
+            DetalleAlbumVisible = Visibility.Visible;
+        }
+
+        [RelayCommand]
+        void CloseDetalle() {
+            if(Musics== null) return;
+            Musics.ToList().ForEach(m => m.IsVisible = Visibility.Visible);
+            GrupoMusic.ToList().ForEach(x => x.IsVisible = Visibility.Visible);
+
+            DetalleAlbumVisible = Visibility.Collapsed;
+            AlbumSelected = null;
         }
 
         [RelayCommand]
@@ -229,26 +295,9 @@ namespace iLegMusic.ViewModels.Windows
         [RelayCommand]
         void BuscarMusic(string musica) {
             if (_service == null) return;
-            GrupoMusic.Clear();
-            Musics?.Where(x => x.Title.ToLower().Contains(musica))
-                .GroupBy(_service.GetKeyForGroup)
-                .OrderBy(x => x.Key).ToList().ForEach(x =>
-                {
-                    
-                    GrupoMusic.Add(new GroupMusic()
-                    {
-                        Key = x.Key,
-                        Musics = x
-                    });
-                });
-        }
+            Musics?.ToList().ForEach(m => m.IsVisible = m.Title.ToLower().Contains(musica) ? Visibility.Visible : Visibility.Collapsed);
+            GrupoMusic.ToList().ForEach(x => x.IsVisible = x.Musics.Count(x => x.IsVisible == Visibility.Collapsed) == x.Musics.Count() ? Visibility.Collapsed : Visibility.Visible);
 
-        [RelayCommand]
-        void PlaySearchInPlayList(ObservableCollection<GroupMusic> musics) {
-            //musics.ToList().ForEach(x => x.Musics.ToList().ForEach(y => Playlist.Add(y)));
-            //MusicSelected = null;
-            //IsFinishPlay = true;
-            //PlayOrPauseCommand.Execute(null);
         }
 
         [RelayCommand]

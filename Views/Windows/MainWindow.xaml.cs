@@ -34,6 +34,8 @@ namespace iLegMusic.Views.Windows
             if(_vm!= null) {
                 _vm.Symbolplay = Wpf.Ui.Common.SymbolRegular.Play20;
                 _vm.IsFinishPlay = true;
+                if (_vm.MusicSelected == null)
+                    _vm.Musics?.Where(x => x.IsInPlay == true).ToList().ForEach(x => x.IsInPlay = false);
             }
         }
 

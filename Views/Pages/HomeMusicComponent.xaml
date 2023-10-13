@@ -6,94 +6,47 @@
              xmlns:local="clr-namespace:iLegMusic.Views.Pages"
              mc:Ignorable="d" 
                xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             d:DesignHeight="450" d:DesignWidth="800"
-             >
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
-        <ui:VirtualizingItemsControl x:Name="lista"                                     
-                                     ScrollViewer.PanningMode="VerticalOnly" VirtualizingPanel.ScrollUnit="Item" 
-                                      Visibility="{Binding VisibleMusics}" 
-                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                                     ItemTemplateSelector="{x:Null}" Grid.Row="1" 
-                                     VirtualizingPanel.IsContainerVirtualizable="True"
-                                     ItemsSource="{Binding GrupoMusic}">
-            <ui:VirtualizingItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20,20,20,40"></WrapPanel>
-                </ItemsPanelTemplate>
-            </ui:VirtualizingItemsControl.ItemsPanel>
-            <ui:VirtualizingItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Foreground="{Binding Background,ElementName=playbtn}" Text="{Binding Key}"
-                                   Margin="20,10,20,20" FontSize="38"></TextBlock>
-                        <ItemsControl ItemsSource="{Binding Musics}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid DataContext="{Binding DataContext,ElementName=lista}" Columns="{Binding Colums}" VerticalAlignment="Top"></UniformGrid>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <ui:CardAction Margin="5" Width="252" Click="Button_Click">
-                                        <Grid>
-                                            <Rectangle Visibility="{Binding PlayVisible}" Stroke="{Binding Background,ElementName=playbtn}" RadiusX="4" RadiusY="4" StrokeThickness="2" Margin="-15,-16,-32,-16"></Rectangle>
-                                            <StackPanel>
-                                                <Grid Width="70" Margin="0,0,0,10" HorizontalAlignment="Left" Height="70">
-                                                    <Rectangle Fill="{ui:ThemeResource}"  RadiusX="7" RadiusY="7">
-                                                        <Rectangle.Stroke>
-                                                            <SolidColorBrush Color="Black" Opacity="0.1"></SolidColorBrush>
-                                                        </Rectangle.Stroke>
-                                                    </Rectangle>
-                                                    <ui:SymbolIcon x:Name="iconmusic" Symbol="MusicNote124" FontSize="22"></ui:SymbolIcon>
-                                                    <Rectangle Fill="{Binding MusicSelected.Img}" RadiusX="7" RadiusY="7"></Rectangle>
-                                                </Grid>
-                                                <StackPanel>
-                                                    <TextBlock Text="{Binding Title}" ToolTip="{Binding Title}"></TextBlock>
-                                                    <TextBlock Text="{Binding Album}" Opacity="0.6" FontSize="12"></TextBlock>
-                                                    <TextBlock Text="{Binding Artist}" Opacity="0.6" FontSize="12"></TextBlock>
-                                                    <TextBlock Text="{Binding url}" ToolTip="{Binding url}" Opacity="0.4" FontSize="12"></TextBlock>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </Grid>
-                                    </ui:CardAction>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </DataTemplate>
-            </ui:VirtualizingItemsControl.ItemTemplate>
-        </ui:VirtualizingItemsControl>
-        <Grid Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" MaxWidth="370" Margin="170,0,0,0">
+        <local:MusicPage Grid.Row="1" Visibility="{Binding MusicsVisible}"></local:MusicPage>
+        <local:AlbumsPages Grid.Row="1" Visibility="{Binding AlbumVisible}"></local:AlbumsPages>
+        <Grid Grid.Row="0" Visibility="{Binding MusicsVisible}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="170,0,7,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ui:Button Command="{Binding PlaySearchInPlayListCommand}" CommandParameter="{Binding ItemsSource,ElementName=lista}">
-                <StackPanel Orientation="Horizontal">
-                    <ui:SymbolIcon Symbol="TaskListAdd20" FontSize="20">
-
-                    </ui:SymbolIcon>
-                    <TextBlock Margin="7,0,0,0" Text="Play"></TextBlock>
-                </StackPanel>
-            </ui:Button>
-            <Grid Grid.Column="1">
-                <ui:TextBox KeyDown="buscartxt_keydown" Margin="7"  PlaceholderText="Buscar Cancion">
+            <Grid Margin="23,7,20,7">
+                <ui:TextBox KeyDown="buscartxt_keydown"  PlaceholderText="Buscar Cancion">
                     <ui:TextBox.Icon>
                         <ui:SymbolIcon Symbol="Search24"></ui:SymbolIcon>
                     </ui:TextBox.Icon>
                 </ui:TextBox>
-            </Grid>
+            </Grid>            
         </Grid>
         <StackPanel>
-            <TextBlock x:Name="txtheader" Text="Mi Musica" FontSize="34" FontWeight="Light" Margin="20"></TextBlock>
-            
-            <ItemsControl HorizontalAlignment="Left" ItemsSource="{Binding MenuItems}">
+            <StackPanel Orientation="Horizontal" Margin="30,30,0,17">
+                <TextBlock x:Name="txtheader" Text="Mi Musica" FontSize="34" FontWeight="Light" ></TextBlock>
+                <ui:Button Width="180" Margin="20,5,0,0" Command="{Binding changeSourceCommand}" ToolTip="{Binding User}" Grid.Column="1">
+                    <Grid> 
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <ui:SymbolIcon VerticalAlignment="Top" Symbol="Folder24"></ui:SymbolIcon>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock  Margin="7,0,0,0" Text="Busca Folder"></TextBlock>
+                            <TextBlock FontSize="10" Opacity="0.6" Margin="7,0,0,0" Text="{Binding User}"  TextTrimming="CharacterEllipsis"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </ui:Button>
+               
+            </StackPanel>
+            <ItemsControl HorizontalAlignment="Left" Margin="16,0,0,0" ItemsSource="{Binding MenuItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"></StackPanel>

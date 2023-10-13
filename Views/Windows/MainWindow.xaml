@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:viewmodels="clr-namespace:iLegMusic.ViewModels.Windows"
-    Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
+    Title="{Binding ApplicationTitle, Mode=OneWay}"
     xmlns:pages="clr-namespace:iLegMusic.Views.Pages"
     Width="1100"
     Height="650"
@@ -17,7 +17,7 @@
     WindowBackdropType="Mica"
     Background="{ui:ThemeResource}"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d" MinWidth="400">
+    mc:Ignorable="d" WindowState="Maximized" MinWidth="400">
     <ui:FluentWindow.DataContext>
         <viewmodels:MainWindowViewModel></viewmodels:MainWindowViewModel>
     </ui:FluentWindow.DataContext>
@@ -27,9 +27,13 @@
         <ui:Button Visibility="Collapsed" Name="btnsearch" Appearance="Primary"></ui:Button>
         <ui:Card Visibility="{Binding VisibleHub}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center">
             <StackPanel Width="220">
-                <ui:SymbolIcon Foreground="{Binding Background,ElementName=btnsearch}" Symbol="MusicNote124" Filled="True" FontSize="48" Margin="0,0,0,20"></ui:SymbolIcon>
+                <ui:SymbolIcon HorizontalAlignment="Center" Foreground="{Binding Background,ElementName=btnsearch}" Symbol="MusicNote124" Filled="True" FontSize="48" Margin="0,0,0,20"></ui:SymbolIcon>
                 <TextBlock x:Name="txte" TextAlignment="Justify" TextWrapping="Wrap" Text="Hola Bienvenido a iLegMusic, para comenzar da clic en el boton, buscara todo desde la ruta: "></TextBlock>
-                <TextBlock Text="{Binding User}" ToolTip="{Binding User}" TextTrimming="CharacterEllipsis" FontSize="12" Margin="0,5,0,0" Opacity="0.7"></TextBlock>
+                <ui:TextBox Text="{Binding User}" IsEnabled="{Binding EnabledFinish}" PlaceholderText="C:/direccion//" FontSize="12" Margin="0,15,0,0" >
+                    <ui:TextBox.Icon>
+                        <ui:SymbolIcon Symbol="Folder24"></ui:SymbolIcon>
+                    </ui:TextBox.Icon>
+                </ui:TextBox>
                 <ui:Button  Command="{Binding SearchMusicsCommand}" Padding="20" IsEnabled="{Binding EnabledFinish}" HorizontalAlignment="Stretch" Margin="0,20,0,0">
                     <StackPanel>
                         <ui:SymbolIcon Foreground="{Binding Foreground,ElementName=txte}" FontSize="28" Symbol="Search20" ></ui:SymbolIcon>
@@ -47,12 +51,12 @@
                 </ui:Button>
             </StackPanel>
         </ui:Card>
-
+       
         <pages:HomeMusicComponent DataContext="{Binding}" Visibility="{Binding VisibleMain}"></pages:HomeMusicComponent>
         
        
         <ui:TitleBar
-            x:Name="TitleBar"
+            x:Name="TitleBar" ShowMaximize="True"
             CloseWindowByDoubleClickOnIcon="True" Margin="70,0,0,0">
         </ui:TitleBar>
         <Rectangle Visibility="{Binding VisibleProtectorWindow}" Fill="{ui:ThemeResource}" Opacity="0.7"></Rectangle>

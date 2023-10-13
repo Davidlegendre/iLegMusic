@@ -8,8 +8,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using Id3Lib;
 using iLegMusic.Models;
-using Mp3Lib;
-
 namespace iLegMusic.Helpers
 {
     public class HelperMusicRender
@@ -36,39 +34,45 @@ namespace iLegMusic.Helpers
             GC.Collect();
             return img;
         }
-        byte[]? getIMGMP3(Mp3File mp3)
-        {
-            var tag = mp3.TagModel.Where(x => x.GetType() == typeof(Id3Lib.Frames.FramePicture)).Cast<Id3Lib.Frames.FramePicture>().Where(x => x.FrameId == "APIC");
-            var img = tag.FirstOrDefault(x => x.PictureData.Length > 0);
-            return img?.PictureData;
-        }
 
-        public MusicModel GetMusicModel(string mp3file) {
-           
+        public MusicModel? GetMusicModel(string mp3file) {
+
             try
             {
-                
-                var mp3 = new Mp3File(file: mp3file);
-                var Img = obtenerimagen(getIMGMP3(mp3));
-                return new MusicModel()
+                var taglibfile = TagLib.File.Create(mp3file);
+                try
                 {
-                    Album = !string.IsNullOrWhiteSpace(mp3.TagHandler.Album) ? mp3.TagHandler.Album : "Album Desconocido",
-                    Artist = !string.IsNullOrWhiteSpace(mp3.TagHandler.Artist) ? mp3.TagHandler.Artist : "Artista Desconocido",
-                    Title = !string.IsNullOrWhiteSpace(mp3.TagHandler.Title) ? mp3.TagHandler.Title :
-                     Path.GetFileNameWithoutExtension(mp3file),
-                    url = mp3file,
-                    Img = Img
-                };
-            }
-            catch {
-                return new MusicModel()
+
+                    var imgs = taglibfile.Tag.Pictures != null && taglibfile.Tag.Pictures.Length > 0 ? taglibfile.Tag.Pictures[0] : null;
+                    var Img = obtenerimagen(imgs?.Data.Data);
+                    return new MusicModel()
+                    {
+                        Album = !string.IsNullOrWhiteSpace(taglibfile.Tag.Album) ? taglibfile.Tag.Album : "Album Desconocido",
+                        Artist = taglibfile.Tag.AlbumArtists != null && taglibfile.Tag.AlbumArtists.Length > 0 ? string.Join(", ", taglibfile.Tag.AlbumArtists) : "Artista Desconocido",
+                        Title = !string.IsNullOrWhiteSpace(taglibfile.Tag.Title) ? taglibfile.Tag.Title :
+                         Path.GetFileNameWithoutExtension(mp3file),
+                        url = mp3file,
+                        Img = Img,
+                        Duration = taglibfile.Properties.Duration.Hours.ToString("00") + ":" +
+                        taglibfile.Properties.Duration.Minutes.ToString("00") + ":" +
+                        taglibfile.Properties.Duration.Seconds.ToString("00"),
+                    };
+                }
+                catch
                 {
-                    Album = "Album Desconocido",
-                    Artist = "Artista Desconocido",
-                    Title = Path.GetFileNameWithoutExtension(mp3file),
-                    url= mp3file
-                };
+                    return new MusicModel()
+                    {
+                        Album = "Album Desconocido",
+                        Artist = "Artista Desconocido",
+                        Title = Path.GetFileNameWithoutExtension(mp3file),
+                        url = mp3file,
+                        Duration = taglibfile.Properties.Duration.Hours.ToString("00") + ":" +
+                        taglibfile.Properties.Duration.Minutes.ToString("00") + ":" +
+                        taglibfile.Properties.Duration.Seconds.ToString("00"),
+                    };
+                }
             }
+            catch { return null; }
         }
     }
 }

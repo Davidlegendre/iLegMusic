@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="iLegMusic.Components.ItemMuisc"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:iLegMusic.Components"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding IsVisible}">
+    <StackPanel >
+        <ui:Button Visibility="Collapsed" Appearance="Primary" Name="btnoculto"></ui:Button>
+        <TextBlock Foreground="{Binding Background,ElementName=btnoculto}" Text="{Binding Key}"
+                                   Margin="20,0,20,7" FontSize="38"></TextBlock>
+        <ItemsControl ItemsSource="{Binding Musics}" Name="listamusicas">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel VerticalAlignment="Top"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ui:CardAction Visibility="{Binding IsVisible}" Margin="5" Width="270" Click="Button_Click">
+                        <Grid>
+                            <Rectangle Visibility="{Binding PlayVisible}" Stroke="{Binding Background,ElementName=btnoculto}" RadiusX="4" RadiusY="4" StrokeThickness="2" Margin="-15,-16,-32,-16"></Rectangle>
+                            <StackPanel>
+                                <Grid Width="70" Margin="0,0,0,10" HorizontalAlignment="Left" Height="70">
+                                    <Rectangle Fill="{ui:ThemeResource}"  RadiusX="7" RadiusY="7">
+                                        <Rectangle.Stroke>
+                                            <SolidColorBrush Color="Black" Opacity="0.1"></SolidColorBrush>
+                                        </Rectangle.Stroke>
+                                    </Rectangle>
+                                    <ui:SymbolIcon x:Name="iconmusic" Symbol="MusicNote124" FontSize="28"></ui:SymbolIcon>
+                                    <Rectangle Fill="{Binding Img}" RadiusX="7" RadiusY="7"></Rectangle>
+                                </Grid>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title}" ToolTip="{Binding Title}"></TextBlock>
+                                    <TextBlock Text="{Binding Album}" Opacity="0.6" FontSize="12"></TextBlock>
+                                    <TextBlock Text="{Binding Artist}" Opacity="0.6" FontSize="12"></TextBlock>
+                                    <TextBlock Text="{Binding Duration}" ToolTip="{Binding url}" Opacity="0.4" FontSize="12"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </ui:CardAction>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

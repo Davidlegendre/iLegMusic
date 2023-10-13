@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Common;
+using Wpf.Ui.Controls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace iLegMusic.Views.Pages
 {
@@ -41,22 +43,6 @@ namespace iLegMusic.Views.Pages
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var _vm = DataContext as MainWindowViewModel;
-            if (_vm != null)
-            {
-                var btn = (Wpf.Ui.Controls.CardAction)sender;
-                var context = btn.DataContext as MusicModel;
-                if (context != null)
-                {
-                    _vm.MusicSelected = context;
-                    _vm.Symbolplay = SymbolRegular.Play20;
-                    _vm.PlayOrPauseCommand.Execute(null);
-                }
-            }
-        }
-
         private void openMenuVol_click(object sender, RoutedEventArgs e)
         {
             menuvol.Show();
@@ -69,22 +55,22 @@ namespace iLegMusic.Views.Pages
             var context = radio.DataContext as MenuMusicsModel;
             if (context != null && _vm != null)
             {
-                _vm.VisibleMusics = Visibility.Collapsed;
-                _vm.VisibleAlbums = Visibility.Collapsed;
-                _vm.VisibleArtists = Visibility.Collapsed;
+                _vm.MusicsVisible = Visibility.Collapsed;
+                _vm.AlbumVisible = Visibility.Collapsed;
+                _vm.ArtistVisible = Visibility.Collapsed;
                 if (context.Icon == SymbolRegular.MusicNote124)
                 {
-                    _vm.VisibleMusics = Visibility.Visible;
+                    _vm.MusicsVisible = Visibility.Visible;
                     return;
                 }
                 if (context.Icon == SymbolRegular.Album24)
                 {
-                    _vm.VisibleAlbums = Visibility.Visible;
+                    _vm.AlbumVisible = Visibility.Visible;
                     return;
                 }
                 if (context.Icon == SymbolRegular.Person24)
                 {
-                    _vm.VisibleArtists = Visibility.Visible;
+                    _vm.ArtistVisible = Visibility.Visible;
                     return;
                 }
             }
@@ -103,5 +89,10 @@ namespace iLegMusic.Views.Pages
             }
         }
 
+        private void gotodown_click(object sender, RoutedEventArgs e)
+        {
+            
+
+        }
     }
 }

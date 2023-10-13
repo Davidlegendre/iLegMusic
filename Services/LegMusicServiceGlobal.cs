@@ -3,6 +3,7 @@ using iLegMusic.Models;
 using Mp3Lib;
 using System.IO;
 
+
 namespace iLegMusic.Services
 {
     public class LegMusicServiceGlobal
@@ -35,8 +36,12 @@ namespace iLegMusic.Services
             List<MusicModel>? musics = null;
             files?.Where(x => x.EndsWith(".mp3")).ToList().ForEach(f => {
                 if (musics == null) musics = new List<MusicModel>();
-                var data = new HelperMusicRender().GetMusicModel(f);
-                musics.Add(data);
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    var data = new HelperMusicRender().GetMusicModel(f);
+                    if (data != null)
+                        musics.Add(data);
+                });
             });
 
             if (musics != null)
