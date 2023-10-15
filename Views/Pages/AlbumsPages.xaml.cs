@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iLegMusic.Models;
+using iLegMusic.ViewModels.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,16 @@ namespace iLegMusic.Views.Pages
         public AlbumsPages()
         {
             InitializeComponent();
+        }
+
+        private void listAlbums_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var _vm = DataContext as MainWindowViewModel;
+            var item = listAlbums.SelectedItem as AlbumModel;
+            if (_vm != null)
+            {
+                _vm.DetalleAlbumCommand.Execute(item);
+            }
         }
     }
 }

@@ -8,17 +8,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" VerticalAlignment="Top">
     <Grid>
-        <Separator VerticalAlignment="Bottom"></Separator>
-        <ui:VirtualizingItemsControl Name="listAlbums" ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsSource="{Binding Albums}">
-            <ui:VirtualizingItemsControl.ItemsPanel>
+        
+        <ListView Name="listAlbums" SelectionChanged="listAlbums_SelectionChanged" ItemsSource="{Binding Albums}">
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel  HorizontalAlignment="Left"></WrapPanel>
+                    <UniformGrid Columns="1"></UniformGrid>
                 </ItemsPanelTemplate>
-            </ui:VirtualizingItemsControl.ItemsPanel>
-            <ui:VirtualizingItemsControl.ItemTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ui:Card Name="cardalbum" Padding="4,4,10,4" Margin="2">
+                    <Grid MaxWidth="270" Name="cardalbum" Margin="2">
                         <StackPanel Orientation="Horizontal">
                             <Grid Width="70" Margin="0,0,0,0" HorizontalAlignment="Left" Height="70">
                                 <Rectangle Fill="{ui:ThemeResource}"  RadiusX="7" RadiusY="7">
@@ -26,20 +25,21 @@
                                         <SolidColorBrush Color="Black" Opacity="0.1"></SolidColorBrush>
                                     </Rectangle.Stroke>
                                 </Rectangle>
-                                <ui:SymbolIcon x:Name="iconmusic" Symbol="Album24" FontSize="28"></ui:SymbolIcon>
+                                <ui:SymbolIcon x:Name="iconmusic" Symbol="Album24" FontSize="20"></ui:SymbolIcon>
                                 <Rectangle Fill="{Binding Img}" RadiusX="7" RadiusY="7"></Rectangle>
                             </Grid>
                             <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding AlbumKey}" ToolTip="{Binding Title}"></TextBlock>
+                                <TextBlock Text="{Binding AlbumKey}" TextTrimming="CharacterEllipsis" MaxWidth="160" ToolTip="{Binding Title}"></TextBlock>
                                 <TextBlock Text="{Binding ArtistsStrings}" Opacity="0.6" FontSize="12"></TextBlock>
-                                <ui:Button Padding="5,2" DataContext="{Binding DataContext,ElementName=listAlbums}" Margin="0,7,0,0" Command="{Binding DetalleAlbumCommand}" CommandParameter="{Binding DataContext,ElementName=cardalbum}">
-                                    <ui:SymbolIcon Symbol="Link16" Filled="True"></ui:SymbolIcon>
-                                </ui:Button>
+                               
                             </StackPanel>
                         </StackPanel>
-                    </ui:Card>
+                    </Grid>
                 </DataTemplate>
-            </ui:VirtualizingItemsControl.ItemTemplate>
-        </ui:VirtualizingItemsControl>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Rectangle Opacity="0.1" Fill="{Binding Foreground,ElementName=listAlbums}" HorizontalAlignment="Right" Width="1">
+
+        </Rectangle>
     </Grid>
 </UserControl>

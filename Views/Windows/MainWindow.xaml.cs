@@ -34,7 +34,11 @@ public partial class MainWindow : UiWindow
         if(_vm!= null) {
             _vm.Symbolplay = Wpf.Ui.Common.SymbolRegular.Play20;
             _vm.IsFinishPlay = true;
-            if (_vm.MusicSelected == null)
+            if (_vm.Iconrepeat == Wpf.Ui.Common.SymbolRegular.ArrowRepeatAll20)
+                _vm.NextCommand.Execute(null);
+            else if (_vm.Iconrepeat == Wpf.Ui.Common.SymbolRegular.ArrowRepeat120)
+                _vm.PlayOrPauseCommand.Execute(null);
+            else if (_vm.MusicSelected == null)
                 _vm.Musics?.Where(x => x.IsInPlay == true).ToList().ForEach(x => x.IsInPlay = false);
         }
     }

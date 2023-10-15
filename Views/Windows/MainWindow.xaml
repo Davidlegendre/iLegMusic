@@ -17,7 +17,7 @@
     WindowBackdropType="Mica"
     Background="{ui:ThemeResource}"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d" MinWidth="400">
+    mc:Ignorable="d" MinWidth="570">
     <ui:UiWindow.DataContext>
         <viewmodels:MainWindowViewModel></viewmodels:MainWindowViewModel>
     </ui:UiWindow.DataContext>

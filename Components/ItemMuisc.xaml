@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:iLegMusic.Components"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding IsVisible}">
+             d:DesignHeight="450" d:DesignWidth="800" Name="pageitemmusic" Visibility="{Binding IsVisible}">
     <StackPanel >
         <ui:Button Visibility="Collapsed" Appearance="Primary" Name="btnoculto"></ui:Button>
         <TextBlock Foreground="{Binding Background,ElementName=btnoculto}" HorizontalAlignment="Left" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Text="{Binding Key}"
@@ -14,14 +14,14 @@
         <ItemsControl ItemsSource="{Binding Musics}" Name="listamusicas">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel VerticalAlignment="Top"></WrapPanel>
+                    <WrapPanel ></WrapPanel>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ui:CardAction Visibility="{Binding IsVisible}" Margin="5" Width="270" Click="Button_Click">
+                    <ui:CardAction Width="255" Visibility="{Binding IsVisible}" Margin="5" Click="Button_Click">
                         <Grid>
-                            <Rectangle Visibility="{Binding PlayVisible}" Stroke="{Binding Background,ElementName=btnoculto}" RadiusX="4" RadiusY="4" StrokeThickness="2" Margin="-15,-16,-32,-16"></Rectangle>
+                            <Rectangle Visibility="{Binding PlayVisible}" Stroke="{Binding Background,ElementName=btnoculto}" RadiusX="4" RadiusY="4" StrokeThickness="2" Margin="-15,-16,-34,-16"></Rectangle>
                             <StackPanel>
                                 <Grid Width="70" Margin="0,0,0,10" HorizontalAlignment="Left" Height="70">
                                     <Rectangle Fill="{ui:ThemeResource}"  RadiusX="7" RadiusY="7">

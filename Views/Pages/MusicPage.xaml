@@ -15,7 +15,7 @@
                                      ItemsSource="{Binding GrupoMusic}">
             <ui:VirtualizingItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel HorizontalAlignment="Center" Margin="20,20,0,40"></WrapPanel>
+                    <WrapPanel HorizontalAlignment="Left" Margin="20,20,0,40"></WrapPanel>
                 </ItemsPanelTemplate>
             </ui:VirtualizingItemsControl.ItemsPanel>
             <ui:VirtualizingItemsControl.ItemTemplate>

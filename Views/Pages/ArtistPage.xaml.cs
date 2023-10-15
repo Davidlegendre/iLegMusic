@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iLegMusic.Models;
+using iLegMusic.ViewModels.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,21 @@ namespace iLegMusic.Views.Pages
     /// </summary>
     public partial class ArtistPage : UserControl
     {
+        
         public ArtistPage()
         {
             InitializeComponent();
+        }
+
+
+        private void listartist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var _vm = DataContext as MainWindowViewModel;
+            var item = listartist.SelectedItem as ArtistModel;
+            if (_vm != null)
+            {
+                _vm.DetaleArtistCommand.Execute(item);
+            }
         }
     }
 }

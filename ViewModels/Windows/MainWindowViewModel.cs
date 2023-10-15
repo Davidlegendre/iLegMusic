@@ -10,6 +10,10 @@ namespace iLegMusic.ViewModels.Windows;
 public partial class MainWindowViewModel : ObservableObject
 {
 
+    SymbolRegular[] iconsrepeats = new SymbolRegular[] { SymbolRegular.ArrowRepeatAllOff20,  
+        SymbolRegular.ArrowRepeatAll20, SymbolRegular.ArrowRepeat120
+    };
+
     LegMusicServiceGlobal? _service;
     public MainWindowViewModel()
     {
@@ -115,7 +119,8 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     Visibility _VisibleIFFind = Visibility.Collapsed;
 
-  
+    [ObservableProperty]
+    SymbolRegular _iconrepeat = SymbolRegular.ArrowRepeatAllOff20;
 
     [ObservableProperty]
     double _maxValueMusicTime = 0;
@@ -280,6 +285,9 @@ public partial class MainWindowViewModel : ObservableObject
         if (MusicSelected != null && Musics != null)
         {
             var index = Musics.IndexOf(MusicSelected);
+            if (index == Musics.Count - 1 && Iconrepeat == SymbolRegular.ArrowRepeatAll20)
+                index = 0;
+
             if (index != Musics.Count - 1)
             {   
                 MusicSelected = Musics[index + 1];
@@ -308,6 +316,16 @@ public partial class MainWindowViewModel : ObservableObject
         Musics?.ToList().ForEach(m => m.IsVisible = m.Title.ToLower().Contains(musica) ? Visibility.Visible : Visibility.Collapsed);
         GrupoMusic.ToList().ForEach(x => x.IsVisible = x.Musics.Count(x => x.IsVisible == Visibility.Collapsed) == x.Musics.Count() ? Visibility.Collapsed : Visibility.Visible);
 
+    }
+
+    [RelayCommand]
+    void repeatActive() {
+        //indiceactual = 0
+        //aumentar = 1
+        //si aumentar es mayor, vuelve a cero
+        var indice = iconsrepeats.ToList().IndexOf(Iconrepeat);
+
+        Iconrepeat = iconsrepeats.ElementAt(indice + 1 < iconsrepeats.Length ? indice + 1 : 0);
     }
 
     [RelayCommand]
