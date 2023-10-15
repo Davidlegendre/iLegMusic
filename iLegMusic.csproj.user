@@ -15,6 +15,9 @@
     <Compile Update="Views\Pages\AlbumsPages.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Pages\ArtistPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\HomeMusicComponent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -29,7 +32,7 @@
     <Page Update="Views\Pages\AlbumsPages.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Pages\DashboardPage.xaml">
+    <Page Update="Views\Pages\ArtistPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\HomeMusicComponent.xaml">

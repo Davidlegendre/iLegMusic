@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="iLegMusic.Views.Pages.ArtistPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:iLegMusic.Views.Pages"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid >
+        <ui:VirtualizingItemsControl Name="listartist" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                                     ItemsSource="{Binding Artists}">
+            <ui:VirtualizingItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Left"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ui:VirtualizingItemsControl.ItemsPanel>
+            <ui:VirtualizingItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ui:Card Name="cardartits" HorizontalAlignment="Left" Padding="4,4,10,4" Margin="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto">
+
+                                </ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <ui:Badge Name="badge" Background="{ui:ThemeResource}" Width="{Binding ActualHeight,ElementName=badge}">
+                                <ui:Badge.BorderBrush>
+                                    <SolidColorBrush Color="Black" Opacity="0.1"></SolidColorBrush>
+                                </ui:Badge.BorderBrush>
+                                <TextBlock Text="{Binding InitialsName}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                            </ui:Badge>
+                            <StackPanel Margin="7,0,0,0" Grid.Column="1" Orientation="Vertical">
+                                <TextBlock Text="{Binding ArtistKey}" ToolTip="{Binding Title}"></TextBlock>
+                                <ui:Button Padding="5,2" DataContext="{Binding DataContext,ElementName=listartist}" Margin="0,7,0,0" Command="{Binding DetaleArtistCommand}" CommandParameter="{Binding DataContext,ElementName=cardartits}">
+                                    <ui:SymbolIcon Symbol="Link16" Filled="True"></ui:SymbolIcon>
+                                </ui:Button>
+                            </StackPanel>
+                        </Grid>
+                    </ui:Card>
+                </DataTemplate>
+            </ui:VirtualizingItemsControl.ItemTemplate>
+        </ui:VirtualizingItemsControl>
+        <Separator VerticalAlignment="Bottom"></Separator>
+    </Grid>
+</UserControl>

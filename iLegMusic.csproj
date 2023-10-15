@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
-    <PackageReference Include="WPF-UI" Version="3.0.0-preview.4" />
+    <PackageReference Include="WPF-UI" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1 " />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1 " />
   </ItemGroup>
@@ -24,15 +24,6 @@
 
   <ItemGroup>
     <Content Include="icon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Id3Lib">
-      <HintPath>Assets\libs\Id3Lib.dll</HintPath>
-    </Reference>
-    <Reference Include="Mp3Lib">
-      <HintPath>Assets\libs\Mp3Lib.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

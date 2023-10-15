@@ -43,5 +43,15 @@ namespace iLegMusic.Components
                 }
             }
         }
+
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var txtblock = (TextBlock)sender;
+            var _vm = Tag as MainWindowViewModel;
+            if(_vm != null && txtblock != null)
+            {
+                _vm.showLettersCommand.Execute(txtblock);
+            }
+        }
     }
 }

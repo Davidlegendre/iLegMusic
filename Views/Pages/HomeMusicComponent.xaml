@@ -10,43 +10,40 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <local:MusicPage Grid.Row="1" Visibility="{Binding MusicsVisible}"></local:MusicPage>
+        <local:MusicPage Grid.Row="2"></local:MusicPage>
+        <local:ArtistPage Grid.Row="1"  Visibility="{Binding ArtistVisible}"></local:ArtistPage>
         <local:AlbumsPages Grid.Row="1" Visibility="{Binding AlbumVisible}"></local:AlbumsPages>
-        <Grid Grid.Row="0" Visibility="{Binding MusicsVisible}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="170,0,7,0">
+        <Grid Grid.Row="1"  Visibility="{Binding MusicsVisible}" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Grid Margin="23,7,20,7">
-                <ui:TextBox KeyDown="buscartxt_keydown"  PlaceholderText="Buscar Cancion">
-                    <ui:TextBox.Icon>
-                        <ui:SymbolIcon Symbol="Search24"></ui:SymbolIcon>
-                    </ui:TextBox.Icon>
-                </ui:TextBox>
-            </Grid>            
+            <ui:TextBox Margin="5" Padding="5,5,5,7" MaxWidth="570" KeyDown="buscartxt_keydown" Icon="Search24" HorizontalContentAlignment="Center" PlaceholderText="Buscar Cancion">
+
+            </ui:TextBox>
+            <Separator VerticalAlignment="Bottom"></Separator>
         </Grid>
         <StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="30,30,0,17">
-                <TextBlock x:Name="txtheader" Text="Mi Musica" FontSize="34" FontWeight="Light" ></TextBlock>
-                <ui:Button Width="180" Margin="20,5,0,0" Command="{Binding changeSourceCommand}" ToolTip="{Binding User}" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Margin="14,48,0,17">
+                <TextBlock x:Name="txtheader" Text="Mi Musica" FontSize="28" FontWeight="Light" ></TextBlock>
+                <ui:Button MaxWidth="180" Padding="7,2" HorizontalContentAlignment="Left" Margin="10,5,0,0" Command="{Binding changeSourceCommand}" ToolTip="{Binding User}" Grid.Column="1">
                     <Grid> 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <ui:SymbolIcon VerticalAlignment="Top" Symbol="Folder24"></ui:SymbolIcon>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock  Margin="7,0,0,0" Text="Busca Folder"></TextBlock>
-                            <TextBlock FontSize="10" Opacity="0.6" Margin="7,0,0,0" Text="{Binding User}"  TextTrimming="CharacterEllipsis"></TextBlock>
-                        </StackPanel>
+                        <ui:SymbolIcon Symbol="FolderAdd24" FontSize="18"></ui:SymbolIcon>
+                        <TextBlock Grid.Column="1" FontSize="12" Opacity="0.6" Margin="7,0,0,0" Text="{Binding User}"  TextTrimming="CharacterEllipsis"></TextBlock>
+
                     </Grid>
                 </ui:Button>
                
             </StackPanel>
-            <ItemsControl HorizontalAlignment="Left" Margin="16,0,0,0" ItemsSource="{Binding MenuItems}">
+            <ItemsControl HorizontalAlignment="Left" Margin="8,0,0,0" ItemsSource="{Binding MenuItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"></StackPanel>
@@ -54,15 +51,15 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton IsChecked="{Binding IsActive}" Checked="menuchecked_checked" Opacity="{Binding Opacity}" BorderBrush="Transparent" Background="Transparent" GroupName="itemmenu" Style="{StaticResource {x:Type ToggleButton}}">
+                        <RadioButton IsChecked="{Binding IsActive}" Padding="5,0,5,7" Checked="menuchecked_checked" Opacity="{Binding Opacity}" BorderBrush="Transparent" Background="Transparent" GroupName="itemmenu" Style="{StaticResource {x:Type ToggleButton}}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ui:SymbolIcon Filled="True" Foreground="{Binding Foreground,ElementName=txtheader}" FontSize="16" Symbol="{Binding Icon}"></ui:SymbolIcon>
+                                <ui:SymbolIcon Foreground="{Binding Foreground,ElementName=txtheader}" FontSize="16" Symbol="{Binding Icon}"></ui:SymbolIcon>
                                 <TextBlock FontWeight="SemiBold" Foreground="{Binding Foreground,ElementName=txtheader}" FontSize="14" Margin="7,0,0,0" Visibility="{Binding LetraVisible}" Grid.Column="1" Text="{Binding Name}"></TextBlock>
-                                <Rectangle Visibility="{Binding SelectBarVisible}" VerticalAlignment="Bottom" RadiusX="3" RadiusY="3" Margin="10,0,10,-8" Height="3" Grid.ColumnSpan="2" Fill="{Binding Background,ElementName=playbtn}"></Rectangle>
+                                <Rectangle Visibility="{Binding SelectBarVisible}" VerticalAlignment="Bottom" RadiusX="3" RadiusY="3" Margin="0,0,0,-8" Height="3" Grid.ColumnSpan="2" Fill="{Binding Background,ElementName=playbtn}"></Rectangle>
 
                             </Grid>
                         </RadioButton>
@@ -72,15 +69,15 @@
         </StackPanel>       
       
         <Separator VerticalAlignment="Bottom"></Separator>
-        <ui:Card  Grid.Row="2" Padding="5,7,15,7" VerticalAlignment="Bottom">
+        <ui:Card  Grid.Row="3" Padding="0,0,15,0" VerticalAlignment="Bottom">
            
-            <Grid Height="58">
+            <Grid Height="78">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="58"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Grid Height="58">
+                <Grid Margin="5">
                     <ui:SymbolIcon Symbol="MusicNote124" FontSize="24"></ui:SymbolIcon>
                     <Rectangle Fill="{Binding MusicSelected.Img}" RadiusX="7" RadiusY="7"></Rectangle>
                 </Grid>
@@ -90,44 +87,54 @@
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock  DockPanel.Dock="Top" FontWeight="Bold" Text="{Binding MusicSelected.Title}"></TextBlock>
+                    <TextBlock Grid.Column="1" FontWeight="Bold" Text="{Binding MusicSelected.Title}"></TextBlock>
+
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
+                        
                         <TextBlock DockPanel.Dock="Top" Opacity="0.8" Text="{Binding MusicSelected.Album}"></TextBlock>
                         <ui:SymbolIcon Grid.Column="1" Opacity="0.8" Symbol="Circle16" Filled="True" Margin="7,3,7,0" FontSize="7"></ui:SymbolIcon>
                         <TextBlock Grid.Column="2" Opacity="0.8" DockPanel.Dock="Top" Text="{Binding MusicSelected.Artist}"></TextBlock>
                     </Grid>
-                    <TextBlock Grid.Row="2" Text="{Binding MusicSelected.url}" Opacity="0.6" FontSize="12"></TextBlock>
+                    <StackPanel Grid.Row="2"  Orientation="Horizontal">
+                        <TextBlock x:Name="txtbPosition" FontSize="12" VerticalAlignment="Center" Text="{Binding PositionVlue, Mode=OneWay}"></TextBlock>
 
+                        <ui:SymbolIcon Grid.Column="1" Opacity="0.8" Symbol="Circle16" Filled="True" Margin="4,3,4,0" FontSize="7"></ui:SymbolIcon>
+
+                        <TextBlock Text="{Binding MusicSelected.Duration, Mode=OneWay}" FontSize="12" VerticalAlignment="Center"></TextBlock>
+
+                    </StackPanel>
                 </Grid>
-                <StackPanel Orientation="Horizontal" Grid.Column="2" DockPanel.Dock="Right">
-                    <ui:Button Click="openMenuVol_click" Appearance="Transparent" BorderBrush="Transparent">
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="2">
+                    
+                    <ui:Button Click="openMenuVol_click"  Padding="2">
                         <Grid>
-                            <ui:SymbolIcon Symbol="Speaker232"></ui:SymbolIcon>
-                            <ui:Flyout x:Name="menuvol" Padding="5">
-                                <ui:Card Padding="5">
-                                    <Slider Width="160" Value="{Binding Volumen}" Maximum="1" LargeChange="0.1"></Slider>
+                            <ui:SymbolIcon Symbol="Speaker232" FontSize="14" Filled="True"></ui:SymbolIcon>
+                            <ui:Flyout x:Name="menuvol" VerticalAlignment="Top" Padding="5">
+                                <ui:Card Padding="5" HorizontalAlignment="Left">
+                                    <Slider  Orientation="Vertical" Value="{Binding Volumen}" Maximum="1" LargeChange="0.1"></Slider>
                                 </ui:Card>
                             </ui:Flyout>
                         </Grid>
                     </ui:Button>
-                    <ui:Button Command="{Binding BackCommand}" Margin="7,0,0,0">
-                        <ui:SymbolIcon Symbol="ChevronLeft20"></ui:SymbolIcon>
+                    <ui:Button Command="{Binding BackCommand}" Padding="4" Margin="7,0,0,0">
+                        <ui:SymbolIcon Symbol="ChevronLeft20" Filled="True"></ui:SymbolIcon>
                     </ui:Button>
-                    <ui:Button x:Name="playbtn" Margin="7,0,7,0" Appearance="Primary" Command="{Binding PlayOrPauseCommand}" HorizontalAlignment="Stretch">
-                        <ui:SymbolIcon Symbol="{Binding Symbolplay}" Filled="True" ></ui:SymbolIcon>
+                    <ui:Button x:Name="playbtn" Margin="7,0,7,0"  Padding="7" Appearance="Primary" Command="{Binding PlayOrPauseCommand}" HorizontalAlignment="Stretch">
+                        <ui:SymbolIcon Symbol="{Binding Symbolplay}" Filled="True" FontSize="16"></ui:SymbolIcon>
                     </ui:Button>
-                    <ui:Button Command="{Binding NextCommand}">
-                        <ui:SymbolIcon Symbol="ChevronRight16"></ui:SymbolIcon>
+                    <ui:Button Command="{Binding NextCommand}"  Padding="4">
+                        <ui:SymbolIcon Symbol="ChevronRight16" Filled="True"></ui:SymbolIcon>
                     </ui:Button>
                 </StackPanel>
             </Grid>
         </ui:Card>
-        <ProgressBar Grid.Row="2" Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime}" Height="5" VerticalAlignment="Top" Margin="0,-2,0,0"></ProgressBar>
-
+        <ProgressBar Grid.Row="3" Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime, Mode=OneWay}" Height="5" VerticalAlignment="Top" Margin="0,-2,0,0"></ProgressBar>
+        <Slider Grid.Row="3" Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime}" Margin="0,-9,0,0" VerticalAlignment="Top" IsMoveToPointEnabled="True" GotMouseCapture="Slider_GotMouseCapture" LostMouseCapture="Slider_LostMouseCapture"/>
     </Grid>
 </UserControl>

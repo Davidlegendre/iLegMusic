@@ -36,11 +36,6 @@ namespace iLegMusic
 
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<MainWindowViewModel>();
-                services.AddSingleton<INavigationService, NavigationService>();
-                services.AddSingleton<ISnackbarService, SnackbarService>();
-                services.AddSingleton<IContentDialogService, ContentDialogService>();
-
-                services.AddSingleton<DashboardPage>();
                 services.AddTransient<HelperMusicRender>();
                 services.AddScoped<LegMusicServiceGlobal>();
             }).Build();

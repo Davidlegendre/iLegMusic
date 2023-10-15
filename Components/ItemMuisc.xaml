@@ -9,8 +9,8 @@
              d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding IsVisible}">
     <StackPanel >
         <ui:Button Visibility="Collapsed" Appearance="Primary" Name="btnoculto"></ui:Button>
-        <TextBlock Foreground="{Binding Background,ElementName=btnoculto}" Text="{Binding Key}"
-                                   Margin="20,0,20,7" FontSize="38"></TextBlock>
+        <TextBlock Foreground="{Binding Background,ElementName=btnoculto}" HorizontalAlignment="Left" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Text="{Binding Key}"
+                                   Margin="20,0,20,7" FontSize="38" Cursor="Hand"></TextBlock>
         <ItemsControl ItemsSource="{Binding Musics}" Name="listamusicas">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
