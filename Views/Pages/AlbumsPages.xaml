@@ -20,7 +20,7 @@
                     <Grid MaxWidth="270" Name="cardalbum" Margin="2">
                         <StackPanel Orientation="Horizontal">
                             <Grid Width="70" Margin="0,0,0,0" HorizontalAlignment="Left" Height="70">
-                                <Rectangle Fill="{ui:ThemeResource}"  RadiusX="7" RadiusY="7">
+                                <Rectangle Fill="{ui:ThemeResource}" Opacity="0.8"  RadiusX="7" RadiusY="7">
                                     <Rectangle.Stroke>
                                         <SolidColorBrush Color="Black" Opacity="0.1"></SolidColorBrush>
                                     </Rectangle.Stroke>

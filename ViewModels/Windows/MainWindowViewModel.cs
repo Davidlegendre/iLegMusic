@@ -3,6 +3,7 @@ using iLegMusic.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Wpf.Ui.Common;
 
 namespace iLegMusic.ViewModels.Windows;
@@ -13,6 +14,8 @@ public partial class MainWindowViewModel : ObservableObject
     SymbolRegular[] iconsrepeats = new SymbolRegular[] { SymbolRegular.ArrowRepeatAllOff20,  
         SymbolRegular.ArrowRepeatAll20, SymbolRegular.ArrowRepeat120
     };
+
+    
 
     LegMusicServiceGlobal? _service;
     public MainWindowViewModel()
@@ -52,6 +55,9 @@ public partial class MainWindowViewModel : ObservableObject
         e.ForEach(x => Musics.Add(x));
         MusicsCount += e.Count();
     }
+
+    [ObservableProperty]
+    Color _coloraccent = Wpf.Ui.Appearance.Accent.GetColorizationColor();
 
     [ObservableProperty]
     int _colums = 4;

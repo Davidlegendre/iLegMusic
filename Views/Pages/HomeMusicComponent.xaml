@@ -14,6 +14,23 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <Rectangle Grid.RowSpan="3">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.27">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                            <RotateTransform Angle="180" CenterX="0.5" CenterY="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop/>
+                    <GradientStop Color="LightGreen" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
@@ -69,7 +86,7 @@
         </StackPanel>       
       
         <Separator VerticalAlignment="Bottom"></Separator>
-        <ui:Card Grid.Row="3" Padding="0,0,15,0" VerticalAlignment="Bottom">
+        <ui:Card Grid.Row="3" Padding="0,0,0,0" VerticalAlignment="Bottom">
            
             <Grid Height="78">
                 <Grid.ColumnDefinitions>
@@ -77,6 +94,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+                <Rectangle Opacity="0.156" Grid.ColumnSpan="4" Fill="{Binding Background,ElementName=playbtn}"></Rectangle>
                 <Grid Margin="10,14,0,10">
                     <ui:SymbolIcon Symbol="MusicNote124" FontSize="24"></ui:SymbolIcon>
                     <Rectangle Fill="{Binding MusicSelected.Img}" RadiusX="7" RadiusY="7"></Rectangle>
@@ -121,7 +139,7 @@
                     </ui:Button>
                     <ui:Button Command="{Binding NextCommand}" FontSize="20"   Padding="4" Icon="ChevronRight16" IconFilled="True">
                     </ui:Button>
-                    <ui:Button Margin="7,0,0,0" FontSize="20" Icon="{Binding Iconrepeat}"  Command="{Binding repeatActiveCommand}" Padding="2">
+                    <ui:Button Margin="7,0,10,0" FontSize="20" Icon="{Binding Iconrepeat}"  Command="{Binding repeatActiveCommand}" Padding="2">
                        
                     </ui:Button>
                 </StackPanel>
