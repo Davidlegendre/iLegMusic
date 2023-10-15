@@ -77,7 +77,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Grid Margin="5">
+                <Grid Margin="10,14,0,10">
                     <ui:SymbolIcon Symbol="MusicNote124" FontSize="24"></ui:SymbolIcon>
                     <Rectangle Fill="{Binding MusicSelected.Img}" RadiusX="7" RadiusY="7"></Rectangle>
                 </Grid>
@@ -101,7 +101,7 @@
                         <TextBlock Grid.Column="2" Opacity="0.8" DockPanel.Dock="Top" Text="{Binding MusicSelected.Artist}"></TextBlock>
                     </Grid>
                     <StackPanel Grid.Row="2"  Orientation="Horizontal">
-                        <TextBlock x:Name="txtbPosition" FontSize="12" VerticalAlignment="Center" Text="{Binding PositionVlue, Mode=OneWay}"></TextBlock>
+                        <TextBlock x:Name="txtbPosition" FontSize="12" VerticalAlignment="Center" Text="{Binding TimeSpanPosition, StringFormat=hh\\:mm\\:ss,Mode=OneWay}"></TextBlock>
 
                         <ui:SymbolIcon Grid.Column="1" Opacity="0.8" Symbol="Circle16" Filled="True" Margin="4,3,4,0" FontSize="7"></ui:SymbolIcon>
 
@@ -134,7 +134,10 @@
                 </StackPanel>
             </Grid>
         </ui:Card>
-        <ProgressBar Grid.Row="3" Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime, Mode=OneWay}" Height="5" VerticalAlignment="Top" Margin="0,-2,0,0"></ProgressBar>
-        <Slider Grid.Row="3" Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime}" Margin="0,-9,0,0" VerticalAlignment="Top" IsMoveToPointEnabled="True" GotMouseCapture="Slider_GotMouseCapture" LostMouseCapture="Slider_LostMouseCapture"/>
-    </Grid>
+        <Grid Grid.Row="3" Background="Transparent" MouseLeave="enterinslider_mouseleave" MouseEnter="enterinslider_mouseenter" Height="5" VerticalAlignment="Top" Margin="0,-2,0,0">
+            <ProgressBar  Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime}" Height="5"></ProgressBar>
+            <Slider x:Name="slider" Visibility="Collapsed" Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime}" Margin="0,-8,0,-7" IsMoveToPointEnabled="True" GotMouseCapture="Slider_GotMouseCapture" LostMouseCapture="Slider_LostMouseCapture"/>
+
+        </Grid>
+      </Grid>
 </UserControl>

@@ -82,9 +82,11 @@ public partial class HomeMusicComponent : UserControl
         var _vm = DataContext as MainWindowViewModel;
         var slider = (Slider)sender;
         
-        if (_vm != null && _vm.MusicSelected != null && _vm.Mediaelement != null) {         
-            _vm.Mediaelement.Position = TimeSpan.FromSeconds(slider.Value);
+        if (_vm != null && _vm.MusicSelected != null && _vm.Mediaelement != null) {
             _vm.IsManipulatingSlider = false;
+            _vm.Mediaelement.Position = TimeSpan.FromSeconds(_vm.ActualvalueMusicTime);
+            _vm.PositionVlue = TimeSpan.FromSeconds(_vm.ActualvalueMusicTime);
+            _vm.ActualvalueMusicTime = slider.Value;
         }
         
     }
@@ -92,7 +94,19 @@ public partial class HomeMusicComponent : UserControl
     private void Slider_GotMouseCapture(object sender, MouseEventArgs e)
     {
         var _vm = DataContext as MainWindowViewModel;
-        if(_vm != null)
-        _vm.IsManipulatingSlider = true;
+        if (_vm != null)
+        {
+            _vm.IsManipulatingSlider = true;
+        }
+    }
+
+    private void enterinslider_mouseenter(object sender, MouseEventArgs e)
+    {
+        slider.Visibility = Visibility.Visible;
+    }
+
+    private void enterinslider_mouseleave(object sender, MouseEventArgs e)
+    {
+        slider.Visibility = Visibility.Collapsed;
     }
 }

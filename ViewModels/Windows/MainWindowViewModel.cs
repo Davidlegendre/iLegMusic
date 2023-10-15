@@ -34,9 +34,9 @@ public partial class MainWindowViewModel : ObservableObject
                         App.Current.Dispatcher.Invoke(() => {
                             ActualvalueMusicTime = PositionVlue.TotalSeconds;
                             PositionVlue = Mediaelement.Position;
-                        });
+                        });                        
                     }
-                    Thread.Sleep(500);
+                    Thread.Sleep(800);
                 }
             });
             timeTask.Start();
@@ -121,6 +121,7 @@ public partial class MainWindowViewModel : ObservableObject
     double _maxValueMusicTime = 0;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TimeSpanPosition))]
     double _actualvalueMusicTime = 0;
 
     [ObservableProperty]
@@ -128,6 +129,8 @@ public partial class MainWindowViewModel : ObservableObject
 
     [ObservableProperty]
     TimeSpan _positionVlue = TimeSpan.Zero;
+
+    public TimeSpan TimeSpanPosition => TimeSpan.FromSeconds(ActualvalueMusicTime);
 
     [ObservableProperty]
     bool _IsFinishPlay = false;

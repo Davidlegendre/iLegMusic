@@ -12,6 +12,8 @@ public class LegMusicServiceGlobal
     {
         return ActuaWidthWindow / 270;
     }
+
+    
     public void GetFilesWithSource(Action init, Action done, string source = "C:\\Users") {
         new Task(() => {
             init();
@@ -33,7 +35,9 @@ public class LegMusicServiceGlobal
         string[]? foldres = null;
         try { foldres = Directory.GetDirectories(source); } catch { };
         List<MusicModel>? musics = null;
-        files?.Where(x => x.EndsWith(".mp3")).ToList().ForEach(f => {
+        files?.Where(x => x.ToLower().EndsWith(".mp3") || x.ToLower().EndsWith(".mpeg")
+        || x.ToLower().EndsWith(".wav") || x.ToLower().EndsWith(".wma") 
+        || x.ToLower().EndsWith(".m4a")).ToList().ForEach(f => {
             if (musics == null) musics = new List<MusicModel>();
 
             App.Current.Dispatcher.Invoke(() =>
