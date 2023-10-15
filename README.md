@@ -8,6 +8,10 @@ Aplicacion para windows que recolecta las musicas segun la ruta que le pongas, e
 ### Capturas
 ![image](https://github.com/Davidlegendre/iLegMusic/blob/main/captures/init.jpg)
 ![image](https://github.com/Davidlegendre/iLegMusic/blob/main/captures/charge.jpg)
+![image](https://github.com/Davidlegendre/iLegMusic/blob/main/captures/home.jpg)
+![image](https://github.com/Davidlegendre/iLegMusic/blob/main/captures/albums.jpg)
+![image](https://github.com/Davidlegendre/iLegMusic/blob/main/captures/artistas.jpg)
+![image](https://github.com/Davidlegendre/iLegMusic/blob/main/captures/letras.jpg)
 
 
 ### Librerias
