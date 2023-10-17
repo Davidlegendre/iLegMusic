@@ -4,18 +4,24 @@
 // All Rights Reserved.
 
 using iLegMusic.ViewModels.Windows;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Wpf.Ui.Controls;
 
 namespace iLegMusic.Views.Windows;
 
 public partial class MainWindow : UiWindow
 {
+    [STAThread]
+    [DllImport("Kernel32.dll", EntryPoint = "SetProcessWorkingSetSize", ExactSpelling = true, CharSet = CharSet.Ansi, SetLastError = true)]
+    private static extern int SetProcessWorkingSetSize(IntPtr process, int minimumWorkingSize, int maximumWorkingSetSize);
+
     MainWindowViewModel? _vm;
     public MainWindow(
     )
     {
-        Wpf.Ui.Appearance.Watcher.Watch(this);
 
+        Wpf.Ui.Appearance.Accent.Apply(System.Windows.Media.Color.FromRgb(30, 215, 96), themeType: Wpf.Ui.Appearance.Theme.GetAppTheme());
         InitializeComponent();
         _vm = DataContext as MainWindowViewModel;
         this.Loaded += MainWindow_Loaded;
@@ -57,5 +63,11 @@ public partial class MainWindow : UiWindow
                 _vm.InitTask();
             }
         }
+    }
+    public void Alzeimer()
+    {
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1);
     }
 }

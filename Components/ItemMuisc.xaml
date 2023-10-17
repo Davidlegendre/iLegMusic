@@ -11,23 +11,27 @@
         <ui:Button Visibility="Collapsed" Appearance="Primary" Name="btnoculto"></ui:Button>
         <TextBlock Foreground="{Binding Background,ElementName=btnoculto}" HorizontalAlignment="Left" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Text="{Binding Key}"
                                    Margin="20,0,20,7" FontSize="38" Cursor="Hand"></TextBlock>
-        <ItemsControl ItemsSource="{Binding Musics}" Name="listamusicas">
+        <ItemsControl ItemsSource="{Binding Musics}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  Name="listamusicas">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel ></WrapPanel>
+                    <WrapPanel></WrapPanel>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ui:CardAction Width="255" Visibility="{Binding IsVisible}" Margin="5" Click="Button_Click">
-                        <Grid>
-
-                            <Rectangle Visibility="{Binding PlayVisible}" Stroke="{Binding Background,ElementName=btnoculto}" RadiusX="4" RadiusY="4" StrokeThickness="2" Margin="-15,-16,-34,-16"></Rectangle>
-                            <StackPanel>
+                    <ListViewItem IsSelected="{Binding IsVisible,ElementName=select, Mode=OneWay}" Visibility="{Binding IsVisible}">
+                        <Grid Width="255" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                            <Rectangle ClipToBounds="True" Opacity="0.1"
+                                      Fill="Black"
+                                   RadiusX="7" RadiusY="7" StrokeThickness="2" >
+                            </Rectangle>
+                            <StackPanel Margin="7">
                                 <Grid Width="70" Margin="0,0,0,10" HorizontalAlignment="Left" Height="70">
-                                    <Rectangle Fill="{ui:ThemeResource}"  RadiusX="7" RadiusY="7">
+                                    <Rectangle RadiusX="7" Fill="Black" Opacity="0.1" RadiusY="7">
                                         <Rectangle.Stroke>
-                                            <SolidColorBrush Color="Black" Opacity="0.1"></SolidColorBrush>
+                                            <SolidColorBrush Color="Black"></SolidColorBrush>
                                         </Rectangle.Stroke>
                                     </Rectangle>
                                     <ui:SymbolIcon x:Name="iconmusic" Symbol="MusicNote124" FontSize="28"></ui:SymbolIcon>
@@ -40,8 +44,16 @@
                                     <TextBlock Text="{Binding Duration}" ToolTip="{Binding url}" Opacity="0.4" FontSize="12"></TextBlock>
                                 </StackPanel>
                             </StackPanel>
+                            <Rectangle x:Name="select" Visibility="{Binding PlayVisible}" Stroke="{Binding Background,ElementName=btnoculto}" 
+                                       Margin="-3"
+                                   RadiusX="7" RadiusY="7" StrokeThickness="2" >
+                                <Rectangle.Effect>
+                                    <DropShadowEffect BlurRadius="50" ShadowDepth="0" Color="#FF1ED760"></DropShadowEffect>
+                                </Rectangle.Effect>
+                            </Rectangle>
                         </Grid>
-                    </ui:CardAction>
+
+                    </ListViewItem>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

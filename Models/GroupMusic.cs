@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace iLegMusic.Models;
 
@@ -6,7 +7,9 @@ public class GroupMusic : INotifyPropertyChanged
 {
     Visibility _IsVisible = Visibility.Visible;
     public string Key { get; set; }
+
     public IEnumerable<MusicModel> Musics { get; set; }
+
     public Visibility IsVisible
     {
         get => _IsVisible; 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iLegMusic.ViewModels.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,6 @@ namespace iLegMusic.Views.Pages
         {
             InitializeComponent();
         }
+
     }
 }

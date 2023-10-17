@@ -15,6 +15,7 @@
     d:DesignWidth="800"
     ExtendsContentIntoTitleBar="True"        
     WindowBackdropType="Mica"
+    
     Background="{ui:ThemeResource}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d" MinWidth="570">
@@ -22,12 +23,32 @@
         <viewmodels:MainWindowViewModel></viewmodels:MainWindowViewModel>
     </ui:UiWindow.DataContext>
     <Grid>
-       
-        <MediaElement LoadedBehavior="Manual" UnloadedBehavior="Manual" Volume="{Binding Volumen}" Name="media" MediaEnded="media_MediaEnded" MediaOpened="media_MediaOpened" Source="{Binding MusicSelected.url}" ></MediaElement>
+        <Rectangle Grid.RowSpan="4">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.27">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                            <RotateTransform Angle="180" CenterX="0.5" CenterY="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop/>
+                    <GradientStop Color="#FF1ED760" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <MediaElement LoadedBehavior="Manual" UnloadedBehavior="Manual"  Volume="{Binding Volumen}" Name="media" MediaEnded="media_MediaEnded" MediaOpened="media_MediaOpened" Source="{Binding MusicSelected.url}" ></MediaElement>
         <ui:Button Visibility="Collapsed" Name="btnsearch" Appearance="Primary"></ui:Button>
         <ui:Card Visibility="{Binding VisibleHub}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center">
             <StackPanel Width="220">
-                <ui:SymbolIcon HorizontalAlignment="Center" Foreground="{Binding Background,ElementName=btnsearch}" Symbol="MusicNote124" Filled="True" FontSize="48" Margin="0,0,0,20"></ui:SymbolIcon>
+                <Grid>
+
+                    <Image Width="30" Margin="0,0,0,30" Source="/icon.ico" />
+                    <ui:ProgressRing Visibility="{Binding VisibleIFFind}" Margin="0,0,0,30" IsIndeterminate="True" Height="48" Width="48"></ui:ProgressRing>
+
+                </Grid>
                 <TextBlock x:Name="txte" TextAlignment="Justify" TextWrapping="Wrap" Text="Hola Bienvenido a iLegMusic, para comenzar da clic en el boton, buscara todo desde la ruta: "></TextBlock>
                 <ui:TextBox Text="{Binding User}" Icon="Folder24" IsEnabled="{Binding EnabledFinish}" PlaceholderText="C:/direccion//" FontSize="12" Margin="0,15,0,0" >
                    
@@ -35,7 +56,7 @@
                 <ui:Button  Command="{Binding SearchMusicsCommand}" Padding="20" IsEnabled="{Binding EnabledFinish}" HorizontalAlignment="Stretch" Margin="0,20,0,0">
                     <StackPanel>
                         <ui:SymbolIcon Foreground="{Binding Foreground,ElementName=txte}" FontSize="28" Symbol="Search20" ></ui:SymbolIcon>
-                        <Grid HorizontalAlignment="Center" Margin="7,20,7,17" Visibility="{Binding VisibleIFFind}">
+                        <Grid HorizontalAlignment="Center" Margin="7,20,7,7" Visibility="{Binding VisibleIFFind}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="auto"/>
@@ -43,18 +64,15 @@
                             <TextBlock Foreground="{Binding Foreground,ElementName=txte}" Text="Musicas Encontradas: "></TextBlock>
                             <TextBlock Foreground="{Binding Foreground,ElementName=txte}" Grid.Column="1" Text="{Binding MusicsCount}"></TextBlock>
                         </Grid>
-                        <ProgressBar  IsIndeterminate="True" Visibility="{Binding VisibleIFFind}" Height="4"></ProgressBar>
-
                     </StackPanel>
                 </ui:Button>
             </StackPanel>
         </ui:Card>
        
         <pages:HomeMusicComponent DataContext="{Binding}" Visibility="{Binding VisibleMain}"></pages:HomeMusicComponent>
-        
-       
+
+
         <ui:TitleBar
-            x:Name="TitleBar" Title="{Binding ApplicationTitle}"/>
-        <Rectangle Visibility="{Binding VisibleProtectorWindow}" Fill="{ui:ThemeResource}" Opacity="0.7"></Rectangle>
+            x:Name="TitleBar" Icon="/icon.ico" Title="{Binding ApplicationTitle}"/>
     </Grid>
 </ui:UiWindow>

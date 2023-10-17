@@ -15,7 +15,7 @@ public class LegMusicServiceGlobal
 
     
     public void GetFilesWithSource(Action init, Action done, string source = "C:\\Users") {
-        new Task(() => {
+       new Task(() => {
             init();
             GetFiles(source);
             done();
@@ -65,7 +65,7 @@ public class LegMusicServiceGlobal
 
         foldres?.ToList().ForEach(f => {
             GetFiles(f);
-        });
+                  });
     }
 
     public event EventHandler<List<MusicModel>>? MusicEventFound;

@@ -12,10 +12,10 @@
         <ui:VirtualizingItemsControl  Name="lista"                                              
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                                      Grid.Row="1" 
-                                     ItemsSource="{Binding GrupoMusic}">
+                                     ItemsSource="{Binding GrupoMusic, Mode=OneWay}">
             <ui:VirtualizingItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel HorizontalAlignment="Left" Margin="20,20,0,40"></WrapPanel>
+                    <WrapPanel HorizontalAlignment="Center" ></WrapPanel>
                 </ItemsPanelTemplate>
             </ui:VirtualizingItemsControl.ItemsPanel>
             <ui:VirtualizingItemsControl.ItemTemplate>
@@ -24,6 +24,7 @@
                 </DataTemplate>
             </ui:VirtualizingItemsControl.ItemTemplate>
         </ui:VirtualizingItemsControl>
+
     </Grid>
     
     

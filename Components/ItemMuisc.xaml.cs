@@ -28,22 +28,6 @@ namespace iLegMusic.Components
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var _vm = Tag as MainWindowViewModel;
-            if (_vm != null)
-            {
-                var btn = (Wpf.Ui.Controls.CardAction)sender;
-                var context = btn.DataContext as MusicModel;
-                if (context != null)
-                {
-                    _vm.MusicSelected = context;
-                    _vm.Symbolplay = SymbolRegular.Play20;
-                    _vm.PlayOrPauseCommand.Execute(null);
-                }
-            }
-        }
-
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var txtblock = (TextBlock)sender;
@@ -51,6 +35,22 @@ namespace iLegMusic.Components
             if(_vm != null && txtblock != null)
             {
                 _vm.showLettersCommand.Execute(txtblock);
+            }
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var _vm = Tag as MainWindowViewModel;
+            if (_vm != null)
+            {
+                var btn = (Grid)sender;
+                var context = btn.DataContext as MusicModel;
+                if (context != null)
+                {
+                    _vm.MusicSelected = context;
+                    _vm.Symbolplay = SymbolRegular.Play20;
+                    _vm.PlayOrPauseCommand.Execute(null);
+                }
             }
         }
     }

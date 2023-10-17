@@ -14,7 +14,7 @@
                                     SelectionChanged="listartist_SelectionChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="1"></UniformGrid>
+                    <UniformGrid Columns="1" VerticalAlignment="Top"></UniformGrid>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
@@ -26,7 +26,7 @@
                             </ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <ui:Badge Name="badge" Background="{ui:ThemeResource}" Width="{Binding ActualHeight,ElementName=badge}">
+                        <ui:Badge Name="badge" Width="48" Background="{ui:ThemeResource}">
                             <ui:Badge.BorderBrush>
                                 <SolidColorBrush Color="Black" Opacity="0.1"></SolidColorBrush>
                             </ui:Badge.BorderBrush>

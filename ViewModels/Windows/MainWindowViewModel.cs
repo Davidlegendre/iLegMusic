@@ -1,5 +1,6 @@
 ﻿using iLegMusic.Models;
 using iLegMusic.Services;
+using iLegMusic.Views.Windows;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Controls;
@@ -13,9 +14,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     SymbolRegular[] iconsrepeats = new SymbolRegular[] { SymbolRegular.ArrowRepeatAllOff20,  
         SymbolRegular.ArrowRepeatAll20, SymbolRegular.ArrowRepeat120
-    };
-
-    
+    };   
 
     LegMusicServiceGlobal? _service;
     public MainWindowViewModel()
@@ -52,12 +51,12 @@ public partial class MainWindowViewModel : ObservableObject
 
     private void _service_MusicEventFound(object? sender, List<MusicModel> e)
     {
-        e.ForEach(x => Musics.Add(x));
+        e.ForEach(x => {
+            Musics?.Add(x);
+        });
         MusicsCount += e.Count();
+       
     }
-
-    [ObservableProperty]
-    Color _coloraccent = Wpf.Ui.Appearance.Accent.GetColorizationColor();
 
     [ObservableProperty]
     int _colums = 4;
@@ -82,6 +81,9 @@ public partial class MainWindowViewModel : ObservableObject
 
     [ObservableProperty]
     int _MusicsCount = 0;
+
+    [ObservableProperty]
+    double _valProgressBar = 1;
 
     [ObservableProperty]
     string _user = "C:\\Users";
@@ -189,6 +191,7 @@ public partial class MainWindowViewModel : ObservableObject
             VisibleHub = Visibility.Collapsed;
             VisibleMain = Visibility.Visible;
             MusicsVisible = Visibility.Visible;
+
             App.Current.Dispatcher.Invoke(() => {
                 Musics?.GroupBy(x => x.Album).ToList().ForEach(x => {
                     Albums.Add(new AlbumModel()
@@ -205,14 +208,14 @@ public partial class MainWindowViewModel : ObservableObject
                         ArtistKey = x.Key,
                     });
                 });
-
-                Musics?.GroupBy(x => _service.GetKeyForGroup(x)).OrderBy(x => x.Key).ToList().ForEach(x => {
-                    GrupoMusic.Add(new GroupMusic() { 
-                        Key = x.Key,
-                        Musics = x
-                    });
+                Musics?.GroupBy(x => _service.GetKeyForGroup(x)).OrderBy(x => x.Key).ToList().ForEach(x =>
+                {
+                    GrupoMusic.Add(new GroupMusic() { Key = x.Key, Musics = x });
                 });
+                App.GetService<MainWindow>().Alzeimer();
             });
+
+            
         }, User);
     }
 
@@ -358,6 +361,7 @@ public partial class MainWindowViewModel : ObservableObject
                     MusicSelected = mselect;
                     IsFinishPlay = false;
                 }
+                
                 Mediaelement.Play();
                 Symbolplay = SymbolRegular.Pause20;
             }

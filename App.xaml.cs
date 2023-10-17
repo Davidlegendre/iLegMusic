@@ -3,6 +3,7 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using Configuration.GlobalHelpers;
 using iLegMusic.Helpers;
 using iLegMusic.Services;
 using iLegMusic.ViewModels.Windows;
@@ -38,6 +39,7 @@ namespace iLegMusic
                 services.AddSingleton<MainWindowViewModel>();
                 services.AddTransient<HelperMusicRender>();
                 services.AddScoped<LegMusicServiceGlobal>();
+                services.AddSingleton<IGlobalHelpers, GlobalHelpers>();
             }).Build();
 
         /// <summary>
