@@ -42,7 +42,7 @@ public partial class MainWindowViewModel : ObservableObject
                             PositionVlue = Mediaelement.Position;
                         });                        
                     }
-                    Thread.Sleep(800);
+                    Thread.Sleep(1000);
                 }
             });
             timeTask.Start();
@@ -57,6 +57,9 @@ public partial class MainWindowViewModel : ObservableObject
         MusicsCount += e.Count();
        
     }
+
+    [ObservableProperty]
+    bool _isIndeterminated = false;
 
     [ObservableProperty]
     int _colums = 4;
@@ -184,6 +187,7 @@ public partial class MainWindowViewModel : ObservableObject
         {
             VisibleIFFind = Visibility.Visible;
             EnabledFinish = false;
+            IsIndeterminated = true;
         }, () =>
         {
             VisibleIFFind = Visibility.Collapsed;
@@ -191,6 +195,7 @@ public partial class MainWindowViewModel : ObservableObject
             VisibleHub = Visibility.Collapsed;
             VisibleMain = Visibility.Visible;
             MusicsVisible = Visibility.Visible;
+            IsIndeterminated = false;
 
             App.Current.Dispatcher.Invoke(() => {
                 Musics?.GroupBy(x => x.Album).ToList().ForEach(x => {
@@ -243,6 +248,7 @@ public partial class MainWindowViewModel : ObservableObject
         _disposed = false;
         MusicsCount = 0;
         IsFinishPlay = false;
+        App.GetService<MainWindow>().Alzeimer();
     }
 
     [RelayCommand]
@@ -251,21 +257,6 @@ public partial class MainWindowViewModel : ObservableObject
         Musics.ToList().ForEach(m => m.IsVisible = m.Album == album.AlbumKey ? Visibility.Visible : Visibility.Collapsed);
         GrupoMusic.ToList().ForEach(x => x.IsVisible = x.Musics.Count(x => x.IsVisible == Visibility.Collapsed) == x.Musics.Count() ? Visibility.Collapsed : Visibility.Visible);
         
-    }
-
-    [RelayCommand]
-    void ViewFileInFolder() {
-        if (MusicSelected != null)
-        {
-            try
-            {
-                Process.Start(MusicSelected.Folder);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
     }
 
     [RelayCommand]

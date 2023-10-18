@@ -26,25 +26,16 @@
             <local:ArtistPage Visibility="{Binding ArtistVisible}"></local:ArtistPage>
             <local:AlbumsPages Visibility="{Binding AlbumVisible}"></local:AlbumsPages>
 
-        </Grid>
-        <ui:TextBox HorizontalAlignment="Right" MaxWidth="230" VerticalAlignment="Bottom" Visibility="{Binding MusicsVisible}" Margin="5" Padding="5,5,5,7" KeyDown="buscartxt_keydown" Icon="Search24" HorizontalContentAlignment="Center" PlaceholderText="Buscar Cancion">
-
-        </ui:TextBox>
+        </Grid>       
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="14,48,0,17">
                 <TextBlock x:Name="txtheader" Text="Mi Musica" FontSize="28" FontWeight="Light" ></TextBlock>
-                <ui:Button MaxWidth="180" Padding="7,2" HorizontalContentAlignment="Left" Margin="10,5,0,0" Command="{Binding changeSourceCommand}" ToolTip="{Binding User}" Grid.Column="1">
-                    <Grid> 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <ui:SymbolIcon Symbol="FolderAdd24" FontSize="18"></ui:SymbolIcon>
-                        <TextBlock Grid.Column="1" FontSize="12" Opacity="0.6" Margin="7,0,0,0" Text="{Binding User}"  TextTrimming="CharacterEllipsis"></TextBlock>
-
-                    </Grid>
+                <ui:Button FontSize="14" FontWeight="Light" Appearance="Primary" Icon="FolderAdd24" MaxWidth="180" Padding="7,2" Content="{Binding User}" HorizontalContentAlignment="Left" Margin="10,5,0,0" Command="{Binding changeSourceCommand}" ToolTip="{Binding User}" Grid.Column="1">
+                   
                 </ui:Button>
-               
+                <ui:TextBox HorizontalAlignment="Stretch" Width="320"  Visibility="{Binding MusicsVisible}" Margin="10,5,5,5" Padding="7,2,7,2" KeyDown="buscartxt_keydown" Icon="Search24" PlaceholderText="Buscar Cancion">
+
+                </ui:TextBox>
             </StackPanel>
             <ItemsControl HorizontalAlignment="Left" Margin="8,0,0,0" ItemsSource="{Binding MenuItems}">
                 <ItemsControl.ItemsPanel>
@@ -60,7 +51,7 @@
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ui:SymbolIcon Foreground="{Binding Foreground,ElementName=txtheader}" FontSize="16" Symbol="{Binding Icon}" Filled="True"></ui:SymbolIcon>
+                                <ui:SymbolIcon Foreground="{Binding Foreground,ElementName=txtheader}" FontSize="16" Symbol="{Binding Icon}" Filled="{Binding IsActive}"></ui:SymbolIcon>
                                 <TextBlock FontWeight="SemiBold" Foreground="{Binding Foreground,ElementName=txtheader}" FontSize="14" Margin="7,0,0,0" Visibility="{Binding LetraVisible}" Grid.Column="1" Text="{Binding Name}"></TextBlock>
                                 <Rectangle Visibility="{Binding SelectBarVisible}" VerticalAlignment="Bottom" RadiusX="3" RadiusY="3" Margin="0,0,0,-8" Height="3" Grid.ColumnSpan="2" Fill="{Binding Foreground,ElementName=progressbar}"></Rectangle>
 
@@ -71,14 +62,14 @@
             </ItemsControl>
         </StackPanel>
         <Separator VerticalAlignment="Bottom"></Separator>
-        <Grid Height="78" VerticalAlignment="Bottom" Grid.Row="3">
+        <Grid Height="75" VerticalAlignment="Bottom" Grid.Row="3">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Rectangle Opacity="0.3" Grid.ColumnSpan="4" Fill="{Binding Background,ElementName=playbtn}"></Rectangle>
+            <Rectangle Grid.ColumnSpan="3" Opacity="0.12" Fill="{Binding Background,ElementName=playbtn}"></Rectangle>
             <Grid Margin="10,14,0,10">
                 <Rectangle Fill="{Binding Background,ElementName=playbtn}" RadiusX="7" RadiusY="7"></Rectangle>
 
@@ -140,7 +131,7 @@
             </ui:Flyout>
         </Grid>
         <Grid Grid.Row="3" Background="Transparent" MouseLeave="enterinslider_mouseleave" MouseEnter="enterinslider_mouseenter" Height="5" VerticalAlignment="Top" Margin="0,-2,0,0">
-            <ProgressBar x:Name="progressbar"  Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime}" Height="5"></ProgressBar>
+            <ProgressBar x:Name="progressbar"  Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime}" Height="4"></ProgressBar>
             <Slider x:Name="slider" Background="Transparent" Visibility="Collapsed" Maximum="{Binding MaxValueMusicTime, Mode=OneWay}" Value="{Binding ActualvalueMusicTime}" Margin="0,-8,0,-7" GotMouseCapture="Slider_GotMouseCapture" LostMouseCapture="Slider_LostMouseCapture"/>
 
         </Grid>

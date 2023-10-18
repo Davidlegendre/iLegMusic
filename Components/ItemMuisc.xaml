@@ -22,11 +22,8 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <ListViewItem IsSelected="{Binding IsVisible,ElementName=select, Mode=OneWay}" Visibility="{Binding IsVisible}">
-                        <Grid Width="255" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-                            <Rectangle ClipToBounds="True" Opacity="0.1"
-                                      Fill="Black"
-                                   RadiusX="7" RadiusY="7" StrokeThickness="2" >
-                            </Rectangle>
+                        <Grid Width="255" Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                            <ui:SymbolIcon HorizontalAlignment="Right" Filled="True" Symbol="ChevronRight20" Margin="0,0,20,0"></ui:SymbolIcon>
                             <StackPanel Margin="7">
                                 <Grid Width="70" Margin="0,0,0,10" HorizontalAlignment="Left" Height="70">
                                     <Rectangle RadiusX="7" Fill="Black" Opacity="0.1" RadiusY="7">
@@ -34,7 +31,7 @@
                                             <SolidColorBrush Color="Black"></SolidColorBrush>
                                         </Rectangle.Stroke>
                                     </Rectangle>
-                                    <ui:SymbolIcon x:Name="iconmusic" Symbol="MusicNote124" FontSize="28"></ui:SymbolIcon>
+                                    <ui:SymbolIcon x:Name="iconmusic" Symbol="MusicNote124" FontSize="28"  Filled="{Binding IsVisible,ElementName=select, Mode=OneWay}"></ui:SymbolIcon>
                                     <Rectangle Fill="{Binding Img}" RadiusX="7" RadiusY="7"></Rectangle>
                                 </Grid>
                                 <StackPanel>
@@ -45,11 +42,8 @@
                                 </StackPanel>
                             </StackPanel>
                             <Rectangle x:Name="select" Visibility="{Binding PlayVisible}" Stroke="{Binding Background,ElementName=btnoculto}" 
-                                       Margin="-3"
-                                   RadiusX="7" RadiusY="7" StrokeThickness="2" >
-                                <Rectangle.Effect>
-                                    <DropShadowEffect BlurRadius="50" ShadowDepth="0" Color="#FF1ED760"></DropShadowEffect>
-                                </Rectangle.Effect>
+                                       Margin="-2,-3,-3,-3"
+                                   RadiusX="7" RadiusY="7" StrokeThickness="1" >
                             </Rectangle>
                         </Grid>
 

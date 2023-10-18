@@ -23,30 +23,13 @@
         <viewmodels:MainWindowViewModel></viewmodels:MainWindowViewModel>
     </ui:UiWindow.DataContext>
     <Grid>
-        <Rectangle Grid.RowSpan="4">
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.27">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                            <RotateTransform Angle="180" CenterX="0.5" CenterY="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop/>
-                    <GradientStop Color="#FF1ED760" Offset="1"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
         <MediaElement LoadedBehavior="Manual" UnloadedBehavior="Manual"  Volume="{Binding Volumen}" Name="media" MediaEnded="media_MediaEnded" MediaOpened="media_MediaOpened" Source="{Binding MusicSelected.url}" ></MediaElement>
-        <ui:Button Visibility="Collapsed" Name="btnsearch" Appearance="Primary"></ui:Button>
         <ui:Card Visibility="{Binding VisibleHub}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center">
             <StackPanel Width="220">
                 <Grid>
 
                     <Image Width="30" Margin="0,0,0,30" Source="/icon.ico" />
-                    <ui:ProgressRing Visibility="{Binding VisibleIFFind}" Margin="0,0,0,30" IsIndeterminate="True" Height="48" Width="48"></ui:ProgressRing>
+                    <ui:ProgressRing Visibility="{Binding VisibleIFFind}" Margin="0,0,0,30" IsIndeterminate="{Binding IsIndeterminated, Mode=OneWay}" Height="48" Width="48"></ui:ProgressRing>
 
                 </Grid>
                 <TextBlock x:Name="txte" TextAlignment="Justify" TextWrapping="Wrap" Text="Hola Bienvenido a iLegMusic, para comenzar da clic en el boton, buscara todo desde la ruta: "></TextBlock>

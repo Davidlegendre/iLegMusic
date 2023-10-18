@@ -6,6 +6,7 @@
 using iLegMusic.ViewModels.Windows;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
 namespace iLegMusic.Views.Windows;
@@ -21,8 +22,9 @@ public partial class MainWindow : UiWindow
     )
     {
 
-        Wpf.Ui.Appearance.Accent.Apply(System.Windows.Media.Color.FromRgb(30, 215, 96), themeType: Wpf.Ui.Appearance.Theme.GetAppTheme());
+       
         InitializeComponent();
+        Watcher.Watch(this);
         _vm = DataContext as MainWindowViewModel;
         this.Loaded += MainWindow_Loaded;
     }
