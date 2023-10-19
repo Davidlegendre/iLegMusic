@@ -13,21 +13,9 @@ namespace iLegMusic.Views.Pages;
 /// </summary>
 public partial class HomeMusicComponent : UserControl
 {
-    LegMusicServiceGlobal _Service;
     public HomeMusicComponent()
     {
         InitializeComponent();
-        _Service = App.GetService<LegMusicServiceGlobal>();
-        this.SizeChanged += HomeMusicComponent_SizeChanged;
-    }
-
-    private void HomeMusicComponent_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        var _vm = DataContext as MainWindowViewModel;
-        if(_vm != null)
-        {
-            _vm.Colums = _Service.ColumnsFromWidthWindow(Convert.ToInt32(this.ActualWidth));
-        }
     }
 
     private void openMenuVol_click(object sender, RoutedEventArgs e)
@@ -45,6 +33,7 @@ public partial class HomeMusicComponent : UserControl
             _vm.MusicsVisible = Visibility.Collapsed;
             _vm.AlbumVisible = Visibility.Collapsed;
             _vm.ArtistVisible = Visibility.Collapsed;
+            
             if (context.Icon == SymbolRegular.MusicNote124)
             {
                 _vm.MusicsVisible = Visibility.Visible;

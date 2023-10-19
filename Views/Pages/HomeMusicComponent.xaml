@@ -13,10 +13,7 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-       
-       
-        
+        </Grid.RowDefinitions>        
         <Grid Grid.Row="2" x:Name="content">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
@@ -30,10 +27,16 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="14,48,0,17">
                 <TextBlock x:Name="txtheader" Text="Mi Musica" FontSize="28" FontWeight="Light" ></TextBlock>
-                <ui:Button FontSize="14" FontWeight="Light" Appearance="Primary" Icon="FolderAdd24" MaxWidth="180" Padding="7,2" Content="{Binding User}" HorizontalContentAlignment="Left" Margin="10,5,0,0" Command="{Binding changeSourceCommand}" ToolTip="{Binding User}" Grid.Column="1">
+                <ui:Button FontSize="14" Appearance="Primary" 
+                           Icon="FolderAdd24" MaxWidth="180" Padding="7,2" 
+                           Content="{Binding User}" 
+                           
+                           HorizontalContentAlignment="Left"
+                           Margin="10,5,0,0" Command="{Binding changeSourceCommand}" 
+                           ToolTip="{Binding User}" Grid.Column="1">
                    
                 </ui:Button>
-                <ui:TextBox HorizontalAlignment="Stretch" Width="320"  Visibility="{Binding MusicsVisible}" Margin="10,5,5,5" Padding="7,2,7,2" KeyDown="buscartxt_keydown" Icon="Search24" PlaceholderText="Buscar Cancion">
+                <ui:TextBox HorizontalAlignment="Stretch" Width="230"  Visibility="{Binding MusicsVisible}" Margin="10,5,5,5" Padding="7,2,7,2" KeyDown="buscartxt_keydown" Icon="Search24" PlaceholderText="Buscar Cancion">
 
                 </ui:TextBox>
             </StackPanel>
@@ -82,7 +85,7 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="1" FontWeight="Bold" Text="{Binding MusicSelected.Title}"></TextBlock>
+                <TextBlock x:Name="title" Grid.Column="1" FontWeight="Bold" Text="{Binding MusicSelected.Title}"></TextBlock>
 
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -92,7 +95,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock DockPanel.Dock="Top" Opacity="0.8" Text="{Binding MusicSelected.Album}"></TextBlock>
-                    <ui:SymbolIcon Grid.Column="1" Opacity="0.8" Symbol="Circle16" Filled="True" Margin="7,3,7,0" FontSize="7"></ui:SymbolIcon>
+                    <ui:SymbolIcon Grid.Column="1" Opacity="0.8" Symbol="Circle16" Filled="True" Margin="4,3,4,0" FontSize="7"></ui:SymbolIcon>
                     <TextBlock Grid.Column="2" Opacity="0.8" DockPanel.Dock="Top" Text="{Binding MusicSelected.Artist}"></TextBlock>
                 </Grid>
                 <StackPanel Grid.Row="2"  Orientation="Horizontal">

@@ -1,10 +1,13 @@
 ﻿using iLegMusic.Models;
 using iLegMusic.Services;
 using iLegMusic.Views.Windows;
+using iZathfit.Components.Paginator;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
+using TagLib.Ogg;
 using Wpf.Ui.Common;
 
 namespace iLegMusic.ViewModels.Windows;
@@ -22,6 +25,12 @@ public partial class MainWindowViewModel : ObservableObject
         _service = App.GetService<LegMusicServiceGlobal>();
         if (_service != null)
             _service.MusicEventFound += _service_MusicEventFound;
+        
+    }
+
+    private void _paginatorcomponent_ChangePageEvent(object? sender, EventArgs e)
+    {
+        paginar(MusicsSearch != null ? MusicsSearch : Musics);
     }
 
     Task? timeTask;
@@ -58,11 +67,11 @@ public partial class MainWindowViewModel : ObservableObject
        
     }
 
+    public PaginatorComponent? _paginatorcomponent;
+    IEnumerable<MusicModel>? MusicsSearch;
+ 
     [ObservableProperty]
     bool _isIndeterminated = false;
-
-    [ObservableProperty]
-    int _colums = 4;
 
     [ObservableProperty]
     double _volumen = 0.5;
@@ -171,9 +180,23 @@ public partial class MainWindowViewModel : ObservableObject
         }
     };
 
-    [ObservableProperty]
-    MediaElement? _mediaelement;
+    public MediaElement? Mediaelement;
 
+    void paginar(IEnumerable<MusicModel>? sourcer = null, bool isNewCollection = false)
+    {
+        if (Musics != null && _service != null && _paginatorcomponent != null)
+        {
+
+            GrupoMusic.Clear();
+            var lista = _paginatorcomponent.GetPaginationCollection(sourcer != null ? 
+                new ObservableCollection<MusicModel>(sourcer) : Musics, isNewCollection);
+            lista.OrderBy(x => x.Title).GroupBy(_service.GetKeyForGroup).ToList().ForEach(x =>
+            {
+                GrupoMusic.Add(new GroupMusic() { Key = x.Key, Musics = x });
+            });
+            App.GetService<MainWindow>().Alzeimer();
+        }
+    }
 
     [RelayCommand]
     private void SearchMusics()
@@ -190,14 +213,20 @@ public partial class MainWindowViewModel : ObservableObject
             IsIndeterminated = true;
         }, () =>
         {
+            
             VisibleIFFind = Visibility.Collapsed;
-            EnabledFinish = true;
+            EnabledFinish = true;            
+            IsIndeterminated = false;
+            if (Musics == null || Musics.Count == 0)
+            {
+                MessageBox.Show("No hay Musicas en la ruta " + User);
+                return;
+            }
             VisibleHub = Visibility.Collapsed;
             VisibleMain = Visibility.Visible;
             MusicsVisible = Visibility.Visible;
-            IsIndeterminated = false;
-
             App.Current.Dispatcher.Invoke(() => {
+                Musics = Musics != null? new ObservableCollection<MusicModel>(Musics.OrderBy(x => x.Title)) : null;
                 Musics?.GroupBy(x => x.Album).ToList().ForEach(x => {
                     Albums.Add(new AlbumModel()
                     {
@@ -213,11 +242,9 @@ public partial class MainWindowViewModel : ObservableObject
                         ArtistKey = x.Key,
                     });
                 });
-                Musics?.GroupBy(x => _service.GetKeyForGroup(x)).OrderBy(x => x.Key).ToList().ForEach(x =>
-                {
-                    GrupoMusic.Add(new GroupMusic() { Key = x.Key, Musics = x });
-                });
-                App.GetService<MainWindow>().Alzeimer();
+                if (_paginatorcomponent != null)
+                    _paginatorcomponent.ChangePageEvent += _paginatorcomponent_ChangePageEvent;
+                paginar();
             });
 
             
@@ -253,10 +280,10 @@ public partial class MainWindowViewModel : ObservableObject
 
     [RelayCommand]
     void DetalleAlbum(AlbumModel album) {
-        if (Musics == null) return;
-        Musics.ToList().ForEach(m => m.IsVisible = m.Album == album.AlbumKey ? Visibility.Visible : Visibility.Collapsed);
-        GrupoMusic.ToList().ForEach(x => x.IsVisible = x.Musics.Count(x => x.IsVisible == Visibility.Collapsed) == x.Musics.Count() ? Visibility.Collapsed : Visibility.Visible);
-        
+        if (Musics == null || album == null) return;
+        MusicsSearch = Musics.Where(m => m.Album == album.AlbumKey);
+        paginar(MusicsSearch, true);
+
     }
 
     [RelayCommand]
@@ -268,29 +295,39 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     void DetaleArtist(ArtistModel artista)
     {
-        if (Musics == null) return;
-        Musics.ToList().ForEach(m => m.IsVisible = m.Artist == artista.ArtistKey ? Visibility.Visible : Visibility.Collapsed);
-        GrupoMusic.ToList().ForEach(x => x.IsVisible = x.Musics.Count(x => x.IsVisible == Visibility.Collapsed) == x.Musics.Count() ? Visibility.Collapsed : Visibility.Visible);
+        if (Musics == null || artista == null) return;
+        MusicsSearch = Musics.Where(m => m.Artist == artista.ArtistKey);
+        paginar(MusicsSearch, true);
     }
 
     [RelayCommand]
     void CloseDetalle() {
-        if(Musics== null) return;
-        Musics.ToList().ForEach(m => m.IsVisible = Visibility.Visible);
-        GrupoMusic.ToList().ForEach(x => x.IsVisible = Visibility.Visible);
+        MusicsSearch = null;        
+        paginar(isNewCollection: true);
     }
 
     [RelayCommand]
     void Next() {
         if (MusicSelected != null && Musics != null)
         {
-            var index = Musics.IndexOf(MusicSelected);
-            if (index == Musics.Count - 1 && Iconrepeat == SymbolRegular.ArrowRepeatAll20)
-                index = 0;
 
-            if (index != Musics.Count - 1)
-            {   
-                MusicSelected = Musics[index + 1];
+            var index = MusicsSearch != null ? 
+                MusicsSearch.ToList().Exists(x => x == MusicSelected) ? MusicsSearch.ToList().IndexOf(MusicSelected) : -1
+                : Musics.IndexOf(MusicSelected);
+            if (index == (MusicsSearch != null ? MusicsSearch.Count() - 1 : Musics.Count - 1) 
+                && Iconrepeat == SymbolRegular.ArrowRepeatAll20)
+                index = 0;
+            else
+                index += 1;
+
+            if (index != Musics.Count && MusicsSearch == null)
+            {
+                MusicSelected = Musics[index];
+                Mediaelement?.Play();
+            }
+            else if(index != MusicsSearch?.Count())
+            {
+                MusicSelected = MusicsSearch?.ToList()[index];
                 Mediaelement?.Play();
             }
         }
@@ -301,10 +338,20 @@ public partial class MainWindowViewModel : ObservableObject
     {
         if (MusicSelected != null && Musics != null)
         {
-            var index = Musics.IndexOf(MusicSelected);
-            if (index != 0)
+            var index = MusicsSearch != null ?
+               MusicsSearch.ToList().Exists(x => x == MusicSelected) ? MusicsSearch.ToList().IndexOf(MusicSelected) : 
+               MusicsSearch.Count()
+               : Musics.IndexOf(MusicSelected);
+
+            if (index == 0
+               && Iconrepeat == SymbolRegular.ArrowRepeatAll20)
+                index = MusicsSearch != null? MusicsSearch.Count() - 1 : Musics.Count - 1;
+            else
+                index -= 1;
+
+            if (index != -1)
             {
-                MusicSelected = Musics[index - 1];
+                MusicSelected = MusicsSearch != null ? MusicsSearch.ToList()[index] : Musics[index];
                 Mediaelement?.Play();
             }
         }
@@ -313,9 +360,8 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     void BuscarMusic(string musica) {
         if (_service == null) return;
-        Musics?.ToList().ForEach(m => m.IsVisible = m.Title.ToLower().Contains(musica) ? Visibility.Visible : Visibility.Collapsed);
-        GrupoMusic.ToList().ForEach(x => x.IsVisible = x.Musics.Count(x => x.IsVisible == Visibility.Collapsed) == x.Musics.Count() ? Visibility.Collapsed : Visibility.Visible);
-
+        MusicsSearch = Musics?.Where(m => m.Title.ToLower().Contains(musica));
+        paginar(MusicsSearch, true);
     }
 
     [RelayCommand]
@@ -324,7 +370,6 @@ public partial class MainWindowViewModel : ObservableObject
         //aumentar = 1
         //si aumentar es mayor, vuelve a cero
         var indice = iconsrepeats.ToList().IndexOf(Iconrepeat);
-
         Iconrepeat = iconsrepeats.ElementAt(indice + 1 < iconsrepeats.Length ? indice + 1 : 0);
     }
 
@@ -342,7 +387,7 @@ public partial class MainWindowViewModel : ObservableObject
             {
                 if (MusicSelected == null)
                 {
-                    MusicSelected = Musics[0];
+                    MusicSelected = MusicsSearch != null ? MusicsSearch.First() : Musics[0];
                 }
 
                 if (IsFinishPlay)
@@ -358,5 +403,4 @@ public partial class MainWindowViewModel : ObservableObject
             }
         }
     }
-
 }

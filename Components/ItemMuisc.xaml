@@ -7,11 +7,18 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Name="pageitemmusic" Visibility="{Binding IsVisible}">
-    <StackPanel >
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <ui:Button Visibility="Collapsed" Appearance="Primary" Name="btnoculto"></ui:Button>
         <TextBlock Foreground="{Binding Background,ElementName=btnoculto}" HorizontalAlignment="Left" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Text="{Binding Key}"
                                    Margin="20,0,20,7" FontSize="38" Cursor="Hand"></TextBlock>
-        <ItemsControl ItemsSource="{Binding Musics}"
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Musics}"
+                      VirtualizingPanel.IsVirtualizing="True"
+                      VirtualizingPanel.VirtualizationMode="Recycling"
+                      VirtualizingPanel.ScrollUnit="Item"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   Name="listamusicas">
             <ItemsControl.ItemsPanel>
@@ -21,29 +28,34 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ListViewItem IsSelected="{Binding IsVisible,ElementName=select, Mode=OneWay}" Visibility="{Binding IsVisible}">
+                    <ListViewItem ToolTip="{Binding url}" IsSelected="{Binding IsVisible,ElementName=select, Mode=OneWay}" Visibility="{Binding IsVisible}">
                         <Grid Width="255" Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
                             <ui:SymbolIcon HorizontalAlignment="Right" Filled="True" Symbol="ChevronRight20" Margin="0,0,20,0"></ui:SymbolIcon>
-                            <StackPanel Margin="7">
+                          
+                            <Grid Margin="7">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
                                 <Grid Width="70" Margin="0,0,0,10" HorizontalAlignment="Left" Height="70">
-                                    <Rectangle RadiusX="7" Fill="Black" Opacity="0.1" RadiusY="7">
+                                    <Rectangle RadiusX="7" Fill="Black" Opacity="0.14" RadiusY="7">
                                         <Rectangle.Stroke>
                                             <SolidColorBrush Color="Black"></SolidColorBrush>
                                         </Rectangle.Stroke>
                                     </Rectangle>
-                                    <ui:SymbolIcon x:Name="iconmusic" Symbol="MusicNote124" FontSize="28"  Filled="{Binding IsVisible,ElementName=select, Mode=OneWay}"></ui:SymbolIcon>
+                                    <ui:SymbolIcon x:Name="iconmusic" Symbol="MusicNote124" FontSize="24"  Filled="{Binding IsVisible,ElementName=select, Mode=OneWay}"></ui:SymbolIcon>
                                     <Rectangle Fill="{Binding Img}" RadiusX="7" RadiusY="7"></Rectangle>
                                 </Grid>
-                                <StackPanel>
+                                <UniformGrid Columns="1" Grid.Row="1">
                                     <TextBlock Text="{Binding Title}" ToolTip="{Binding Title}"></TextBlock>
                                     <TextBlock Text="{Binding Album}" Opacity="0.6" FontSize="12"></TextBlock>
                                     <TextBlock Text="{Binding Artist}" Opacity="0.6" FontSize="12"></TextBlock>
-                                    <TextBlock Text="{Binding Duration}" ToolTip="{Binding url}" Opacity="0.4" FontSize="12"></TextBlock>
-                                </StackPanel>
-                            </StackPanel>
+                                    <TextBlock Text="{Binding Duration}"  Opacity="0.4" FontSize="12"></TextBlock>
+                                </UniformGrid>
+                            </Grid>
                             <Rectangle x:Name="select" Visibility="{Binding PlayVisible}" Stroke="{Binding Background,ElementName=btnoculto}" 
                                        Margin="-2,-3,-3,-3"
-                                   RadiusX="7" RadiusY="7" StrokeThickness="1" >
+                                   RadiusX="7" RadiusY="7" StrokeThickness="1.5" >
                             </Rectangle>
                         </Grid>
 
@@ -51,5 +63,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </StackPanel>
+    </Grid>
 </UserControl>

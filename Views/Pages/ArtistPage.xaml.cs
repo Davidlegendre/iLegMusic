@@ -38,5 +38,10 @@ namespace iLegMusic.Views.Pages
                 _vm.DetaleArtistCommand.Execute(item);
             }
         }
+
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            listartist.SelectedItem = null;
+        }
     }
 }
