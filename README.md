@@ -1,5 +1,5 @@
 # iLegMusic
-Aplicacion para windows que recolecta las musicas segun la ruta que le pongas, extrae los tags y los separa por musicas, albumes y artistas, ademas las musicas los agrupa en el abecedario o numero
+Aplicacion para windows que recolecta las musicas segun la ruta que le pongas, extrae los tags y los separa por musicas, albumes y artistas, ademas las musicas los agrupa en el abecedario o numero, ademas donde tu busqueda es tu playlist.
 
 ### Autor
 - David Legendre
