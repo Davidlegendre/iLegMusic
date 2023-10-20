@@ -4,6 +4,7 @@ using iLegMusic.ViewModels.Windows;
 using iLegMusic.Views.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using TagLib.Ogg;
 using Wpf.Ui.Common;
 
 namespace iLegMusic.Views.Pages;
@@ -16,6 +17,16 @@ public partial class HomeMusicComponent : UserControl
     public HomeMusicComponent()
     {
         InitializeComponent();
+        this.Loaded += HomeMusicComponent_Loaded;
+    }
+
+    private void HomeMusicComponent_Loaded(object sender, RoutedEventArgs e)
+    {
+        var _vm = DataContext as MainWindowViewModel;
+        if(_vm != null)
+        {
+            _vm._paginatorcomponent = paginator;
+        }
     }
 
     private void openMenuVol_click(object sender, RoutedEventArgs e)
@@ -33,7 +44,7 @@ public partial class HomeMusicComponent : UserControl
             _vm.MusicsVisible = Visibility.Collapsed;
             _vm.AlbumVisible = Visibility.Collapsed;
             _vm.ArtistVisible = Visibility.Collapsed;
-            
+            _vm.FoldersVisible = Visibility.Collapsed;
             if (context.Icon == SymbolRegular.MusicNote124)
             {
                 _vm.MusicsVisible = Visibility.Visible;
@@ -48,6 +59,11 @@ public partial class HomeMusicComponent : UserControl
             if (context.Icon == SymbolRegular.Person24)
             {
                 _vm.ArtistVisible = Visibility.Visible;
+                return;
+            }
+            if (context.Icon == SymbolRegular.Folder20)
+            {
+                _vm.FoldersVisible = Visibility.Visible;
                 return;
             }
         }

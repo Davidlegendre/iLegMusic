@@ -89,6 +89,9 @@ public partial class MainWindowViewModel : ObservableObject
     Visibility _MusicsVisible = Visibility.Visible;
 
     [ObservableProperty]
+    Visibility _FoldersVisible = Visibility.Collapsed;
+
+    [ObservableProperty]
     Visibility _visibleHub = Visibility.Visible;
 
     [ObservableProperty]
@@ -122,16 +125,10 @@ public partial class MainWindowViewModel : ObservableObject
     ObservableCollection<ArtistModel> _Artists = new ObservableCollection<ArtistModel>();
 
     [ObservableProperty]
-    MenuOrderModel? _MenuOrderSelected = null;
-
-
+    ObservableCollection<FoldersMusicModel> _folders = new ObservableCollection<FoldersMusicModel>();
 
     [ObservableProperty]
-    ObservableCollection<MenuOrderModel> _menuOrder = new ObservableCollection<MenuOrderModel>() {
-        new(){ Title ="Orden Por Nombre", TypeOrden = TypeOrden.Nombre },
-        new() { Title = "Orden Por Album", TypeOrden = TypeOrden.Album },
-        new() {Title = "Orden Por Artista", TypeOrden = TypeOrden.Artista}
-    };
+    ObservableCollection<BreadcrumbBarItem> _breadcrumbbarlist = new ObservableCollection<BreadcrumbBarItem>();
 
     [ObservableProperty]
     SymbolRegular _symbolplay = SymbolRegular.Play20;
@@ -177,6 +174,10 @@ public partial class MainWindowViewModel : ObservableObject
         new MenuMusicsModel(){ 
             Name="Artists",
             Icon = SymbolRegular.Person24
+        },
+        new MenuMusicsModel(){ 
+            Name = "Folders",
+            Icon = SymbolRegular.Folder20
         }
     };
 
@@ -242,6 +243,10 @@ public partial class MainWindowViewModel : ObservableObject
                         ArtistKey = x.Key,
                     });
                 });
+                Musics?.GroupBy(x => x.Folder).ToList().ForEach(x => {
+                    Folders.Add(new FoldersMusicModel() { UrlOriginal = x.Key, Title = x.Key.Substring(x.Key.LastIndexOf('\\') + 1) });
+                });
+
                 if (_paginatorcomponent != null)
                     _paginatorcomponent.ChangePageEvent += _paginatorcomponent_ChangePageEvent;
                 paginar();
@@ -285,6 +290,32 @@ public partial class MainWindowViewModel : ObservableObject
         paginar(MusicsSearch, true);
 
     }
+
+    [RelayCommand]
+    void DetalleFolder(FoldersMusicModel foldersMusic) { 
+        if(Musics == null || foldersMusic == null) return;
+        MusicsSearch = Musics.Where(x => x.Folder == foldersMusic.UrlOriginal);
+        Breadcrumbbarlist.Clear();
+        var folders = foldersMusic.UrlOriginal.Split('\\');
+        int i = 0;
+        folders.ToList().ForEach(x => {
+            i += 1;
+            Breadcrumbbarlist.Add(new BreadcrumbBarItem() { Title = x, Id = i });
+        }) ;
+        Breadcrumbbarlist.Last().LeftSymbolVisibility =  Visibility.Collapsed;
+        paginar(MusicsSearch, true);
+        
+    }
+
+    [RelayCommand]
+    void DetalleFolderWithRoute(string ruta)
+    {
+        if (Musics == null || string.IsNullOrWhiteSpace(ruta)) return;
+        MusicsSearch = Musics.Where(x => x.Folder.Contains(ruta));
+        paginar(MusicsSearch, true);
+    }
+
+    
 
     [RelayCommand]
     void showLetters(TextBlock textBlock) {

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:iLegMusic.Views.Pages"
              mc:Ignorable="d" 
                xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:paginator="clr-namespace:iZathfit.Components.Paginator"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -22,10 +23,10 @@
             <local:MusicPage Grid.Column="1"></local:MusicPage>
             <local:ArtistPage Visibility="{Binding ArtistVisible}"></local:ArtistPage>
             <local:AlbumsPages Visibility="{Binding AlbumVisible}"></local:AlbumsPages>
-
+            <local:FoldersPage Visibility="{Binding FoldersVisible}"></local:FoldersPage>
         </Grid>       
         <StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="14,48,0,17">
+            <StackPanel Orientation="Horizontal" Margin="14,40,0,10">
                 <TextBlock x:Name="txtheader" Text="Mi Musica" FontSize="28" FontWeight="Light" ></TextBlock>
                 <ui:Button FontSize="14" Appearance="Primary" 
                            Icon="FolderAdd24" MaxWidth="180" Padding="7,2" 
@@ -40,6 +41,7 @@
 
                 </ui:TextBox>
             </StackPanel>
+
             <ItemsControl HorizontalAlignment="Left" Margin="8,0,0,0" ItemsSource="{Binding MenuItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -48,7 +50,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton IsChecked="{Binding IsActive}" Padding="5,0,5,7" Checked="menuchecked_checked" Opacity="{Binding Opacity}" BorderBrush="Transparent" Background="Transparent" GroupName="itemmenu" Style="{StaticResource {x:Type ToggleButton}}">
+                        <RadioButton IsChecked="{Binding IsActive}" Padding="10,0,10,7" Checked="menuchecked_checked" Opacity="{Binding Opacity}" BorderBrush="Transparent" Background="Transparent" GroupName="itemmenu" Style="{StaticResource {x:Type ToggleButton}}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -56,7 +58,7 @@
                                 </Grid.ColumnDefinitions>
                                 <ui:SymbolIcon Foreground="{Binding Foreground,ElementName=txtheader}" FontSize="16" Symbol="{Binding Icon}" Filled="{Binding IsActive}"></ui:SymbolIcon>
                                 <TextBlock FontWeight="SemiBold" Foreground="{Binding Foreground,ElementName=txtheader}" FontSize="14" Margin="7,0,0,0" Visibility="{Binding LetraVisible}" Grid.Column="1" Text="{Binding Name}"></TextBlock>
-                                <Rectangle Visibility="{Binding SelectBarVisible}" VerticalAlignment="Bottom" RadiusX="3" RadiusY="3" Margin="0,0,0,-8" Height="3" Grid.ColumnSpan="2" Fill="{Binding Foreground,ElementName=progressbar}"></Rectangle>
+                                <Rectangle Visibility="{Binding SelectBarVisible}" VerticalAlignment="Bottom" RadiusX="2" RadiusY="2" Margin="0,0,0,-10" Height="4" Grid.ColumnSpan="2" Fill="{Binding Foreground,ElementName=progressbar}"></Rectangle>
 
                             </Grid>
                         </RadioButton>
@@ -64,8 +66,10 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>
+        <paginator:PaginatorComponent x:Name="paginator" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"></paginator:PaginatorComponent>
+
         <Separator VerticalAlignment="Bottom"></Separator>
-        <Grid Height="75" VerticalAlignment="Bottom" Grid.Row="3">
+        <Grid Height="67" VerticalAlignment="Bottom" Grid.Row="3">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70"></ColumnDefinition>
@@ -73,13 +77,13 @@
                 <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Rectangle Grid.ColumnSpan="3" Opacity="0.12" Fill="{Binding Background,ElementName=playbtn}"></Rectangle>
-            <Grid Margin="10,14,0,10">
-                <Rectangle Fill="{Binding Background,ElementName=playbtn}" RadiusX="7" RadiusY="7"></Rectangle>
+            <Grid Margin="7,7,0,7">
+                <Rectangle Fill="{Binding Background,ElementName=playbtn}" Opacity="0.5" RadiusX="7" RadiusY="7"></Rectangle>
 
                 <ui:SymbolIcon Symbol="MusicNote124" Foreground="{Binding Foreground,ElementName=playbtn}" FontSize="24"></ui:SymbolIcon>
                 <Rectangle Fill="{Binding MusicSelected.Img}" RadiusX="7" RadiusY="7"></Rectangle>
             </Grid>
-            <Grid Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+            <Grid Grid.Column="1" Margin="7,0,0,0" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
@@ -95,13 +99,13 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock DockPanel.Dock="Top" Opacity="0.8" Text="{Binding MusicSelected.Album}"></TextBlock>
-                    <ui:SymbolIcon Grid.Column="1" Opacity="0.8" Symbol="Circle16" Filled="True" Margin="4,3,4,0" FontSize="7"></ui:SymbolIcon>
+                    <ui:SymbolIcon Grid.Column="1" Opacity="0.5" Symbol="Circle16" Filled="True" Margin="4,3,4,0" FontSize="7"></ui:SymbolIcon>
                     <TextBlock Grid.Column="2" Opacity="0.8" DockPanel.Dock="Top" Text="{Binding MusicSelected.Artist}"></TextBlock>
                 </Grid>
                 <StackPanel Grid.Row="2"  Orientation="Horizontal">
                     <TextBlock x:Name="txtbPosition" FontSize="12" VerticalAlignment="Center" Text="{Binding TimeSpanPosition, StringFormat=hh\\:mm\\:ss,Mode=OneWay}"></TextBlock>
 
-                    <ui:SymbolIcon Grid.Column="1" Opacity="0.8" Symbol="Circle16" Filled="True" Margin="4,3,4,0" FontSize="7"></ui:SymbolIcon>
+                    <ui:SymbolIcon Grid.Column="1" Opacity="0.5" Symbol="Circle16" Filled="True" Margin="4,3,4,0" FontSize="7"></ui:SymbolIcon>
 
                     <TextBlock Text="{Binding MusicSelected.Duration, Mode=OneWay}" FontSize="12" VerticalAlignment="Center"></TextBlock>
 

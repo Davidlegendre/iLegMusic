@@ -23,7 +23,7 @@
         <viewmodels:MainWindowViewModel></viewmodels:MainWindowViewModel>
     </ui:UiWindow.DataContext>
     <Grid>
-        <MediaElement LoadedBehavior="Manual" UnloadedBehavior="Manual"  Volume="{Binding Volumen}" Name="media" MediaEnded="media_MediaEnded" MediaOpened="media_MediaOpened" Source="{Binding MusicSelected.url}" ></MediaElement>
+        <MediaElement LoadedBehavior="Manual" MediaElement.MediaFailed="media_MediaFailed" UnloadedBehavior="Manual"  Volume="{Binding Volumen}" Name="media" MediaEnded="media_MediaEnded" MediaOpened="media_MediaOpened" Source="{Binding MusicSelected.url}" ></MediaElement>
         <ui:Card Visibility="{Binding VisibleHub}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center">
             <StackPanel Width="220">
                 <Grid>

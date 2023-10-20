@@ -12,7 +12,7 @@
                    VirtualizingPanel.IsVirtualizing="True"
                       VirtualizingPanel.VirtualizationMode="Recycling"
                       VirtualizingPanel.ScrollUnit="Item"
-                  
+                  Margin="7"
                   SelectionChanged="listAlbums_SelectionChanged" ItemsSource="{Binding Albums}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

@@ -72,4 +72,9 @@ public partial class MainWindow : UiWindow
         GC.WaitForPendingFinalizers();
         SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1);
     }
+
+    private void media_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+    {
+        System.Windows.MessageBox.Show(e.ErrorException.Message);
+    }
 }

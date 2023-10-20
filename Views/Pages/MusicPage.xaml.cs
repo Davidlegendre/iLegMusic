@@ -23,23 +23,9 @@ namespace iLegMusic.Views.Pages
     /// </summary>
     public partial class MusicPage : UserControl
     {
-        LegMusicServiceGlobal _service;
         public MusicPage()
         {
             InitializeComponent();
-            _service = App.GetService<LegMusicServiceGlobal>();
-            this.Loaded += MusicPage_Loaded;
-        }
-
-        
-
-        private void MusicPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            var _vm = lista.DataContext as MainWindowViewModel;
-            if (_vm != null)
-            {
-                _vm._paginatorcomponent = paginator;
-            }
         }
 
     }

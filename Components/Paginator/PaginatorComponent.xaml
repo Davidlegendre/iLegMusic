@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width=" auto"/>
         </Grid.ColumnDefinitions>
-        <ui:Button Name="btnleft" Icon="ChevronLeft20" Click="btnPrevious_click" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="7"></ui:Button>
+        <ui:Button Name="btnleft" Icon="ChevronLeft20" Click="btnPrevious_click" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="7,7,0,7"></ui:Button>
         <ui:Card Grid.Column="1" VerticalAlignment="Stretch" ClipToBounds="True" Margin="7" Padding="10,0,10,0">
             <StackPanel Orientation="Horizontal">
                 <TextBlock x:Name="txtpage" Text="{Binding Page}" Visibility="{Binding VisibleTextoNumber}" Background="Transparent" MouseLeftButtonDown="tbPageClick" VerticalAlignment="Center" Opacity="0.6" FontSize="14"></TextBlock>
@@ -22,6 +22,6 @@
                 <TextBlock Text="{Binding TotalPagesString}" VerticalAlignment="Center" FontSize="14" Opacity="0.8"></TextBlock>
             </StackPanel>
         </ui:Card>
-        <ui:Button Icon="ChevronRight20" Click="btnNext_Click" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="7"></ui:Button>
+        <ui:Button Icon="ChevronRight20" Click="btnNext_Click" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,7,7,7"></ui:Button>
     </Grid>
 </UserControl>

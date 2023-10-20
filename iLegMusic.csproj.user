@@ -9,6 +9,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Components\BreadcrumbBar\BreadcumbBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Components\ItemMuisc.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -16,6 +19,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Pages\ArtistPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Pages\FoldersPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Pages\HomeMusicComponent.xaml.cs">
@@ -26,6 +32,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Components\BreadcrumbBar\BreadcumbBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Components\ItemMuisc.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -33,6 +42,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\ArtistPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\FoldersPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\HomeMusicComponent.xaml">
