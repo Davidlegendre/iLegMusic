@@ -275,6 +275,8 @@ public partial class MainWindowViewModel : ObservableObject
         GrupoMusic.Clear();
         Albums.Clear();
         Artists.Clear();
+        Folders.Clear();
+        Breadcrumbbarlist.Clear();
         _disposed = true;
         timeTask = null;
         _disposed = false;
